@@ -1,0 +1,29 @@
+.Map {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  pointer-events: all !important;
+
+  .Center-GPS {
+    background-color: transparent;
+    position: absolute;
+    z-index: 5;
+    top: 2vh;
+    left: 90vw;
+    width: 2.8125rem;
+    height: 2.8125rem;
+    padding-left: 0;
+    padding-right: 0;
+
+    background: #ffffff;
+    box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+    border-radius: 6.25rem;
+    border: transparent;
+    img {
+      width: 1.875rem;
+    }
+  }
+}

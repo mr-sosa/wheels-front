@@ -1,0 +1,47 @@
+import { LOCALES } from '../locales';
+
+const english = {
+  [LOCALES.ENGLISH]: {
+    footer_services: 'Services',
+    footer_webDesign: 'Web design',
+    footer_development: 'Development',
+    footer_hosting: 'Hosting',
+    footer_about: 'About',
+    footer_company: 'Company',
+    footer_team: 'Team',
+    footer_legacy: 'Legacy',
+    footer_careers: 'Careers',
+    footer_job: 'Job openings',
+    footer_success: 'Employee success',
+    footer_benefits: 'Benefits',
+    footer_social: 'Social',
+    footer_cpr: 'Wheels App © 2022 All rights reserved.',
+    login: 'Login',
+    logout: 'Logout',
+    passenger: 'Passenger',
+    driver: 'Driver',
+    createTrip: 'Create Trip',
+    hello: 'Hello',
+    gallery: 'Gallery',
+    username: 'Username',
+    password: 'Password',
+    todo: 'Todo',
+    profile: 'Profile',
+    products: 'Products',
+    contact: 'Contacts',
+    where: "Where to?",
+    select: "Select an option",
+    localityO: "Origin locality",
+    localityD: "Destination locality",
+    hour: "Hour",
+    addressO: "Origin address",
+    addressD: "Destination address",
+    price: "Price",
+    seats: "Seats",
+    route: "Route",
+    flexible: "flexible",
+    date: "Date"
+  },
+};
+
+export default english;

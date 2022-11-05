@@ -1,0 +1,90 @@
+body {
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(
+      0deg,
+      rgba(29, 45, 68, 0.8),
+      rgba(29, 45, 68, 0.8)
+    ),
+    url('./../../data/city.jpg');
+  text-align: center;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+
+  &-title {
+    position: relative;
+    top: 10vh;
+    height: 70vh;
+
+    font-family: 'Bubblegum Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 7.4375rem;
+    line-height: 9.625rem;
+    /* identical to box height, or 129% */
+
+    letter-spacing: -0.015em;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #ffffff;
+    align-self: center;
+  }
+
+  &-buttons {
+    position: relative;
+    height: 25vh;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0%;
+
+    &-style {
+      width: 10vw;
+      min-width: fit-content;
+      height: 3.125rem;
+
+      background: #dde0e3;
+      box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
+      border-radius: 0.8125rem;
+      color: #1d2d44;
+
+      cursor: pointer;
+
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.4375rem;
+      /* identical to box height, or 142% */
+
+      text-align: center;
+      letter-spacing: 0.0781rem;
+      text-transform: uppercase;
+    }
+
+    &-style:hover {
+      background: #121a2b;
+      color: #ffffff !important;
+    }
+  }
+
+  &-2 {
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+
+    .Loading {
+      height: 30vh;
+      width: auto;
+    }
+  }
+}
