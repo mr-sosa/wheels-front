@@ -1,23 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Auth0Provider } from '@auth0/auth0-react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
+import { UserProvider } from './context/UserContext';
+import 'react-toastify/ReactToastify.min.css';
+import '../src/assets/global.scss';
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENTID;
-
-ReactDOM.render(
-  <Auth0Provider
-    domain={domain}
-    clientId={clientId}
-    redirectUri={window.location.origin}
-  >
-    {/* <ThemeProvider /> */}
-    <App />
-  </Auth0Provider>,
-  document.getElementById('root'),
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+  <Router>
+    <Auth0ProviderWithHistory>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </Auth0ProviderWithHistory>
+  </Router>,
 );
 
 // If you want to start measuring performance in your app, pass a function

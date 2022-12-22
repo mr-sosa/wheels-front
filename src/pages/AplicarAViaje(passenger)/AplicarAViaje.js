@@ -1,52 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Row,
-  Col,
-  Badge,
-  Button,
-  ListGroup,
-  Modal,
-  Spinner,
-} from 'react-bootstrap';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Row, Col, Badge, Button, ListGroup, Spinner } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { URL } from '../../utils/DeployVariables';
 import './AplicarAViaje.scss';
 
-const URL = 'http://localhost:3010/api/v1/drivertravels/';
+export const AplicarAViaje = () => {
+  const navigate = useNavigate();
 
-export const AplicarAViaje = (props) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [driverTravels, setDriverTravels] = useState([]);
-  const [idDriverTravel, setIdDriverTravel] = useState();
-
-  /*Modal*/
-  const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = (e) => {
-    setShowModal(true);
-    setIdDriverTravel(e);
-  };
-
-  // Toast Alert
-  const onTriggerToast = (data) => {
-    let toast = { header: data.header, body: data.body, timeStamp: Date.now() };
-    props.parentCallback(toast);
-  };
-
-  /*Button*/
-
-  const onReserve = (e) => {
-    fetch(URL + e + '/reserved', {
-      method: 'POST',
-    });
-    fetch(URL + e + '/passengers/6c7f3b2c-84b5-4c58-b350-f36b10864560', {
-      method: 'POST',
-    });
-    setShowModal(false);
-    onTriggerToast({
-      header: 'Viaje Creado',
-      body: 'Se ha creado existosamente tu viaje',
-    });
-  };
 
   const getHour = (date) => {
     let fullHour = date.split('T')[1];
@@ -61,27 +26,56 @@ export const AplicarAViaje = (props) => {
     return hour;
   };
 
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  let query = useMemo(() => {
+    let query = '';
+    searchParams.forEach((value, key) => {
+      query = query + '&' + key + '=' + value;
+    });
+    if (!searchParams.get('date')) {
+      let today = new Date();
+      query = query + `&date=${today.toISOString()}`;
+    }
+
+    return query;
+  }, [searchParams]);
+
   useEffect(() => {
-    fetch(URL)
+    fetch(`${URL}drivertravels/?${query}`)
       .then((response) => response.json())
       .then(
         (data) => {
-          setIsLoaded(true);
-          setDriverTravels(data);
+          if (data.numItems === 0) {
+            toast.error(<FormattedMessage id="toast_error_searchTravels" />);
+            setIsLoaded(true);
+            setDriverTravels([]);
+          } else {
+            toast.success(
+              <FormattedMessage id="toast_success_searchTravels" />,
+            );
+            setIsLoaded(true);
+            setDriverTravels(data.data);
+          }
         },
         (error) => {
+          toast.error(<FormattedMessage id="toast_error_searchTravels" />);
           setIsLoaded(true);
           setError(error);
         },
       );
-  });
+  }, [query]);
 
   if (error) {
     return (
       <>
         <div className="aplicarAViaje-container">
-          <h2>Viajes disponibles</h2>
-          <div className="sm-4 center">Error fetching data</div>
+          <h2>
+            <FormattedMessage id="list_driverTravel_tittle" />
+          </h2>
+          <div className="sm-4 center">
+            <FormattedMessage id="error_fetchingdata" />
+          </div>
         </div>
       </>
     );
@@ -89,8 +83,12 @@ export const AplicarAViaje = (props) => {
     return (
       <>
         <div className="aplicarAViaje-container">
-          <h2>Viajes disponibles</h2>
-          <div className="sm-4 center">Loading...</div>
+          <h2>
+            <FormattedMessage id="list_driverTravel_tittle" />
+          </h2>
+          <div className="sm-4 center">
+            <FormattedMessage id="loading" />
+          </div>
 
           <Spinner animation="border" />
         </div>
@@ -100,51 +98,51 @@ export const AplicarAViaje = (props) => {
     return (
       <>
         <div className="aplicarAViaje-container">
-          <h2>Viajes disponibles</h2>
+          <h2>
+            <FormattedMessage id="list_driverTravel_tittle" />
+          </h2>
           <div className="sm-4 center">
             <ListGroup as="ol" variant="flush" className="DriverTravelList">
               {driverTravels.map((elm, index) => (
                 <ListGroup.Item
                   as={Row}
                   className="DriverTravel d-flex align-items-center"
+                  key={index}
                 >
-                  <Col sm={8}>
+                  <Col sm={4}>
+                    <div className="fw-bold">
+                      <FormattedMessage id="addressO" /> {elm.origin.address}
+                    </div>
+                    <div className="fw-bold">
+                      <FormattedMessage id="addressD" />{' '}
+                      {elm.destination.address}
+                    </div>
+                  </Col>
+                  <Col sm={4} className="datos">
                     <Col>
                       <div className="fw-bold">
-                        Fecha: {elm.date.split('T')[0]}
+                        <FormattedMessage id="list_driverTravel_date" />
+                        {elm.date.split('T')[0]}
                       </div>
-                      <div className="fw-bold">Hora: {getHour(elm.date)}</div>
+                      <div className="fw-bold">
+                        <FormattedMessage id="list_driverTravel_hour" />
+                        {getHour(elm.date)}
+                      </div>
                     </Col>
                     <Badge as={Col} bg="primary" pill>
-                      Cupos: {elm.spaceAvailable}
+                      <FormattedMessage id="list_driverTravel_quota" />
+                      {elm.spaceAvailable}
                     </Badge>
                   </Col>
-                  <Col sm={4}>
-                    <Button onClick={() => handleShowModal(elm.id)}>
-                      Reservar
+                  <Col sm={3}>
+                    <Button onClick={() => navigate(`/Viaje/${elm.id}`)}>
+                      <FormattedMessage id="list_driverTravel_button" />
                     </Button>
                   </Col>
                 </ListGroup.Item>
               ))}
             </ListGroup>
           </div>
-          <Modal show={showModal} onHide={handleCloseModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Crear Viaje</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>¿Estas seguro de que deseas crear el viaje?</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Cancelar
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => onReserve(idDriverTravel)}
-              >
-                Aceptar
-              </Button>
-            </Modal.Footer>
-          </Modal>
         </div>
       </>
     );

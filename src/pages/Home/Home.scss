@@ -1,17 +1,17 @@
 .Home {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   &-Content {
     background: white;
     border-radius: 0.8125rem;
-    min-width: fit-content;
+    max-width: fit-content;
     font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-left: 5vw;
-    margin-top: 2vh;
     /* identical to box height, or 162% */
 
     color: #000000;
@@ -84,6 +84,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      cursor: pointer;
 
       &-Img {
         height: 3vh;

@@ -1,18 +1,16 @@
 .Map {
-  position: absolute;
-  z-index: -2;
-  top: 0;
-  left: 0;
+  position: relative;
+  left: -0.5rem;
   height: 100vh;
-  width: 100vw;
   pointer-events: all !important;
+  border-radius: 0 0 0.5rem 0;
 
   .Center-GPS {
+    border-radius: 0 0 0.5rem 0;
     background-color: transparent;
-    position: absolute;
-    z-index: 5;
-    top: 2vh;
-    left: 90vw;
+    position: relative;
+    top: -100vh;
+    left: 15vw;
     width: 2.8125rem;
     height: 2.8125rem;
     padding-left: 0;

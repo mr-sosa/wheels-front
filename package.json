@@ -1,25 +1,40 @@
 {
   "name": "wheels-font",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "keywords": [
+    "google",
+    "javascript",
+    "maps",
+    "samples"
+  ],
   "dependencies": {
     "@auth0/auth0-react": "^1.12.0",
     "@react-google-maps/api": "^2.13.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tomtom-international/web-sdk-maps": "^6.21.3",
+    "@tomtom-international/web-sdk-plugin-searchbox": "^3.2.0",
+    "@tomtom-international/web-sdk-services": "^6.21.3",
     "bootstrap": "^5.2.2",
     "dotenv": "^16.0.3",
+    "formik": "^2.2.9",
     "npm": "^8.19.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.2.1",
+    "react-loading-screen": "^0.0.17",
+    "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "sass": "^1.55.0",
     "serve": "^14.0.1",
-    "web-vitals": "^2.1.4"
+    "styled-components": "^5.3.6",
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@types/google.maps": "^3.50.5",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.25.0",
     "eslint-plugin-react": "^7.31.10"

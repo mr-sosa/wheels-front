@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
-import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
+import React, { useEffect, useState } from 'react';
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  DirectionsRenderer,
+} from '@react-google-maps/api';
 import './Map.scss';
-import GPS_img from './../../data/gps.png';
+import GPS_img from './../../assets/gps.png';
 
 const GOOGLE_MAPS_TOKEN = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
 
 const bogota = { lat: 4.60971, lng: -74.08175 };
 
-export const Map = () => {
+export const Map = (props) => {
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState('');
+  const [duration, setDuration] = useState('');
+
+  async function calculateRoute() {
+    if (props.origin === '' || props.destiantion === '') {
+      return;
+    }
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin: props.origin,
+      destination: props.destination,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  }
+
   // Geolocation Permissions
   let userPosition = bogota;
   const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
@@ -27,17 +53,13 @@ export const Map = () => {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
+  useEffect(() => {
+    console.log(props.origin);
+    console.log(props.destination);
+    calculateRoute();
+  }, [calculateRoute]);
+
   // Google Maps
-
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: GOOGLE_MAPS_TOKEN,
-    libraries: ['places'],
-  });
-
-  if (!isLoaded) {
-    return <></>;
-  }
 
   return (
     <>
@@ -46,8 +68,9 @@ export const Map = () => {
           center={userPosition === bogota ? bogota : userPosition}
           zoom={17}
           mapContainerStyle={{
-            width: '100vw',
+            width: '35vw',
             height: '100vh',
+            borderBottomRightRadius: 8,
             background:
               'linear-gradient(180deg, rgba(29, 45, 68, 0) 50%, #1D2D44 92.6%)',
           }}
@@ -61,6 +84,9 @@ export const Map = () => {
           onLoad={(map) => setMap(map)}
         >
           <Marker className="Marker" position={userPosition} />
+          {directionsResponse && (
+            <DirectionsRenderer directions={directionsResponse} />
+          )}
         </GoogleMap>
         <button
           className="Center-GPS"

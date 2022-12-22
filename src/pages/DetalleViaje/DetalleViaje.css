@@ -1,0 +1,213 @@
+.Detalle {
+  width: 40vw;
+  background-color: #ffffff;
+  border-radius: 0 0 0 0.5rem;
+}
+
+.Detalle hr {
+  height: 1px;
+  border: none;
+}
+
+.Detalle p {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 0;
+}
+
+.Detalle .Divider {
+  height: 4px;
+}
+
+.Detalle .Driver {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.Detalle .Driver .Score {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.Detalle .Driver .Score span {
+  width: 0.9375rem;
+}
+
+.Detalle .Driver .Score .checked {
+  color: orange;
+}
+
+.Detalle .Driver .col-md-2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Detalle .Driver .avatar {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 50%;
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.Detalle .Driver .avatar svg {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+}
+
+.Detalle .Driver .avatar img {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.Detalle .Driver:hover {
+  cursor: pointer;
+  background-color: #1d2d44d1;
+  color: white;
+  border-radius: 0.8125rem;
+}
+
+.Detalle .Preferences {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Detalle .Preferences .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Detalle .Preferences .row .Text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #708c91;
+  font-weight: 500;
+}
+
+.Detalle .Preferences .row .Icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.Detalle .Preferences .row svg {
+  height: 2.8125rem;
+}
+
+.Detalle .Preferences .row svg .line {
+  fill: #d8d8d8;
+  stroke-width: 23px;
+  stroke-linecap: round;
+  paint-order: fill;
+  stroke: #f00000;
+}
+
+.Detalle .Vehicle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Detalle .Vehicle .Color {
+  color: #708c91;
+  font-weight: 500;
+}
+
+.NoPage {
+  padding-top: 2rem;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  color: white;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.NoPage-1 img {
+  width: 40vw;
+}
+
+.NoPage-2 {
+  width: 40vw;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+
+.NoPage-2-button {
+  width: 10vw;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  height: 3.125rem;
+  background: #dde0e3;
+  -webkit-box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
+          box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
+  border-radius: 0.8125rem;
+  color: #1d2d44;
+  cursor: pointer;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.4375rem;
+  /* identical to box height, or 142% */
+  text-align: center;
+  letter-spacing: 0.0781rem;
+  text-transform: uppercase;
+}
+/*# sourceMappingURL=DetalleViaje.css.map */

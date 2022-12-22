@@ -1,0 +1,29 @@
+.Map {
+  position: relative;
+  left: -0.5rem;
+  height: 100vh;
+  pointer-events: all !important;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.Map .Center-GPS {
+  border-radius: 0 0 0.5rem 0;
+  background-color: transparent;
+  position: relative;
+  top: -100vh;
+  left: 15vw;
+  width: 2.8125rem;
+  height: 2.8125rem;
+  padding-left: 0;
+  padding-right: 0;
+  background: #ffffff;
+  -webkit-box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+          box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+  border-radius: 6.25rem;
+  border: transparent;
+}
+
+.Map .Center-GPS img {
+  width: 1.875rem;
+}
+/*# sourceMappingURL=Map.css.map */

@@ -1,0 +1,160 @@
+.Detalle {
+  width: 40vw;
+  background-color: #ffffff;
+  border-radius: 0 0 0 0.5rem;
+
+  hr {
+    height: 1px;
+    border: none;
+  }
+  p {
+    width: fit-content;
+    margin-bottom: 0;
+  }
+
+  .Divider {
+    height: 4px;
+  }
+
+  .Driver {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .Score {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      span {
+        width: 0.9375rem;
+      }
+      .checked {
+        color: orange;
+      }
+    }
+    .col-md-2 {
+      display: flex;
+      align-items: center;
+    }
+    .avatar {
+      box-sizing: border-box;
+      border-radius: 50%;
+      position: relative;
+      width: 48px;
+      height: 48px;
+
+      svg {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+      }
+      img {
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+      }
+    }
+  }
+  .Driver:hover {
+    cursor: pointer;
+    background-color: #1d2d44d1;
+    color: white;
+    border-radius: 0.8125rem;
+  }
+
+  .Preferences {
+    display: flex;
+    justify-content: center;
+
+    .row {
+      display: flex;
+      justify-content: center;
+
+      .Text {
+        display: flex;
+        align-items: center;
+        color: rgb(112, 140, 145);
+        font-weight: 500;
+      }
+
+      .Icon {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      svg {
+        height: 2.8125rem;
+        .line {
+          fill: rgb(216, 216, 216);
+          stroke-width: 23px;
+          stroke-linecap: round;
+          paint-order: fill;
+          stroke: rgb(240, 0, 0);
+        }
+      }
+    }
+  }
+
+  .Vehicle {
+    display: flex;
+    justify-content: center;
+
+    .Color {
+      color: rgb(112, 140, 145);
+      font-weight: 500;
+    }
+  }
+}
+
+.NoPage {
+  padding-top: 2rem;
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+
+  color: white;
+
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+
+  &-1 {
+    img {
+      width: 40vw;
+    }
+  }
+
+  &-2 {
+    width: 40vw;
+    min-width: fit-content;
+
+    &-button {
+      width: 10vw;
+      min-width: fit-content;
+      height: 3.125rem;
+
+      background: #dde0e3;
+      box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
+      border-radius: 0.8125rem;
+      color: #1d2d44;
+
+      cursor: pointer;
+
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.4375rem;
+      /* identical to box height, or 142% */
+
+      text-align: center;
+      letter-spacing: 0.0781rem;
+      text-transform: uppercase;
+    }
+  }
+}

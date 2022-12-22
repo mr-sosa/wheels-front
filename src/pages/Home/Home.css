@@ -1,0 +1,190 @@
+.Home {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Home-Content {
+  background: white;
+  border-radius: 0.8125rem;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  /* identical to box height, or 162% */
+  color: #000000;
+  text-decoration: none;
+}
+
+.Home-Buttons {
+  height: 10vh;
+  width: 90vw;
+  top: 85vh;
+  left: 0;
+  position: absolute;
+  padding: 1vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.Home-Buttons-Style {
+  background: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 40vw;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Home-Buttons-Style-Text {
+  position: relative;
+  top: 0.5rem;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 39px;
+  /* identical to box height, or 162% */
+  text-align: center;
+  color: #ffffff;
+}
+
+.Home-Buttons-Style-Text:hover {
+  color: #1d2d44;
+}
+
+.MenuButton {
+  background: white;
+  border-radius: 0.8125rem;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 1vw;
+  margin-top: 2vh;
+}
+
+.MenuButton-Img {
+  height: 5vh;
+}
+
+.Menu-Body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.Menu-Body-Logout {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.Menu-Body-Logout-Img {
+  height: 3vh;
+}
+
+.Active {
+  color: #ffc868;
+}
+
+.Active:hover {
+  color: #ffc868;
+}
+
+.Back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  pointer-events: none !important;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, rgba(29, 45, 68, 0)), color-stop(92.6%, #1d2d44));
+  background: linear-gradient(180deg, rgba(29, 45, 68, 0) 50%, #1d2d44 92.6%);
+}
+
+#Back {
+  pointer-events: none !important;
+}
+
+.Map {
+  pointer-events: all !important;
+}
+
+#logout-container {
+  position: absolute;
+  z-index: 3;
+  top: 1vh;
+  left: 1vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.btn-warning {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 23px;
+  /* identical to box height, or 142% */
+  text-align: center;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  color: #1d2d44;
+  background: #ffc868;
+  -webkit-box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
+          box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
+  border-radius: 13px;
+}
+/*# sourceMappingURL=Home.css.map */

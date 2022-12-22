@@ -1,0 +1,19 @@
+.tittle {
+  font-family: 'Bubblegum Sans';
+  font-style: normal;
+  cursor: pointer;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' -25, 'opsz' 48;
+  font-size: 2.5rem;
+}
+
+.Menu-Body-Options {
+  .Profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+  }
+}

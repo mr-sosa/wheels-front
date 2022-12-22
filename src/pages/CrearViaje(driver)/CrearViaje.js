@@ -1,12 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useForm } from '../../hooks/useForm';
-import { Form, Col } from 'react-bootstrap';
+import {
+  Form,
+  Col,
+  FloatingLabel,
+  ListGroup,
+  OverlayTrigger,
+  Popover,
+  Spinner,
+} from 'react-bootstrap';
 import { Autocomplete } from '@react-google-maps/api';
 import './CrearViaje.scss';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { FormattedMessage } from 'react-intl';
 
 export const CrearViaje = (props) => {
-  const urlDriverTravel = process.env.REACT_APP_BACK_URL + 'drivertravels/';
-  const urlAddress = process.env.REACT_APP_BACK_URL + 'addresses';
+  var urlDriverTravel = process.env.REACT_APP_DEV_BACK_URL + 'drivertravels/';
+  var urlAddress = process.env.REACT_APP_DEV_BACK_URL + 'addresses';
+  const isProd =
+    process.env.REACT_APP_IS_PRODUCTION.toLocaleUpperCase === 'TRUE';
+  if (isProd) {
+    urlDriverTravel = process.env.REACT_APP_PROD_BACK_URL + 'drivertravels/';
+    urlAddress = process.env.REACT_APP_PROD_BACK_URL + 'addresses';
+  }
 
   const [formValues, handleInputChange] = useForm({});
   const [validated, setValidated] = useState(false);
@@ -68,6 +84,35 @@ export const CrearViaje = (props) => {
         handleInputChange(e);
         break;
     }
+  };
+
+  //Search Direcctions
+  const searchOptions = {};
+
+  const [showD, setShowD] = useState(false);
+  const [addressD, setAddressD] = useState('');
+
+  const handleChangeD = (value) => {
+    setShowD(true);
+    setAddressD(value);
+  };
+
+  const handleSelectD = (value) => {
+    setShowD(false);
+    setAddressD(value);
+  };
+
+  const [showO, setShowO] = useState(false);
+  const [addressO, setAddressO] = useState('');
+
+  const handleChangeO = (value) => {
+    setShowO(true);
+    setAddressO(value);
+  };
+
+  const handleSelectO = (value) => {
+    setShowO(false);
+    setAddressO(value);
   };
 
   const handleSubmit = async (e) => {
@@ -143,29 +188,89 @@ export const CrearViaje = (props) => {
   return (
     <>
       <div className="crearViaje-container">
-        <h2>Crear Viaje</h2>
+        <h2>
+          <FormattedMessage id="createTravel_tittle" />
+        </h2>
         <Form className="crearViaje-form" noValidate validated={validated}>
           <Form.Group className="form-group">
             <Form.Label htmlFor="direccionO" className="form-label">
-              Dirección origen:
+              <FormattedMessage id="addressO" />
             </Form.Label>
             <div className="col">
-              <Autocomplete>
-                <Form.Control
-                  type="text"
-                  name="direccionO"
-                  id="direccionO"
-                  className="form-control"
-                  placeholder="Dirección origen"
-                  required
-                  value={direccionO}
-                  ref={originRef}
-                >
-                  {/*addresses.map(() => (
-                  <option>addresses.name</option>
-                ))*/}
-                </Form.Control>
-              </Autocomplete>
+              <PlacesAutocomplete
+                value={addressO}
+                onChange={handleChangeO}
+                onSelect={handleSelectO}
+                searchOptions={searchOptions}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <>
+                    <OverlayTrigger
+                      placement="bottom-start"
+                      show={showO}
+                      overlay={
+                        <Popover id="popover-contained">
+                          <ListGroup as="ul">
+                            {loading && (
+                              <Spinner animation="border" role="status">
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </Spinner>
+                            )}
+                            {suggestions.map((suggestion) => {
+                              const style = suggestion.active
+                                ? {
+                                    backgroundColor: '#121a2b',
+                                    color: '#ffffff',
+                                    cursor: 'pointer',
+                                  }
+                                : {
+                                    backgroundColor: '#ffffff',
+                                    cursor: 'pointer',
+                                  };
+
+                              return (
+                                <ListGroup.Item
+                                  as="li"
+                                  {...getSuggestionItemProps(suggestion, {
+                                    style,
+                                  })}
+                                >
+                                  {suggestion.description}
+                                </ListGroup.Item>
+                              );
+                            })}
+                          </ListGroup>
+                        </Popover>
+                      }
+                    >
+                      <Col>
+                        <FloatingLabel
+                          controlId="AddressO"
+                          label={<FormattedMessage id="addressO" />}
+                        >
+                          <Form.Control
+                            type="text"
+                            name="AddressO"
+                            className="form-control"
+                            required
+                            ref={originRef}
+                            {...getInputProps({
+                              placeholder: 'Dirección origen',
+                            })}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </OverlayTrigger>
+                  </>
+                )}
+              </PlacesAutocomplete>
               <Form.Control.Feedback type="invalid">
                 <small>Debe seleccionar una direción de origen.</small>
               </Form.Control.Feedback>
@@ -174,20 +279,83 @@ export const CrearViaje = (props) => {
 
           <Form.Group className="form-group">
             <Form.Label htmlFor="direccionD" className="form-label">
-              Dirección destino:
+              <FormattedMessage id="addressD" />
             </Form.Label>
             <div className="col">
-              <Autocomplete>
-                <Form.Control
-                  type="text"
-                  name="direccionD"
-                  className="form-control"
-                  placeholder="Dirección destino"
-                  required
-                  value={direccionD}
-                  ref={destinationRef}
-                ></Form.Control>
-              </Autocomplete>
+              <PlacesAutocomplete
+                value={addressD}
+                onChange={handleChangeD}
+                onSelect={handleSelectD}
+                searchOptions={searchOptions}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <>
+                    <OverlayTrigger
+                      placement="bottom-start"
+                      show={showD}
+                      overlay={
+                        <Popover id="popover-contained">
+                          <ListGroup as="ul">
+                            {loading && (
+                              <Spinner animation="border" role="status">
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </Spinner>
+                            )}
+                            {suggestions.map((suggestion) => {
+                              const style = suggestion.active
+                                ? {
+                                    backgroundColor: '#121a2b',
+                                    color: '#ffffff',
+                                    cursor: 'pointer',
+                                  }
+                                : {
+                                    backgroundColor: '#ffffff',
+                                    cursor: 'pointer',
+                                  };
+
+                              return (
+                                <ListGroup.Item
+                                  as="li"
+                                  {...getSuggestionItemProps(suggestion, {
+                                    style,
+                                  })}
+                                >
+                                  {suggestion.description}
+                                </ListGroup.Item>
+                              );
+                            })}
+                          </ListGroup>
+                        </Popover>
+                      }
+                    >
+                      <Col>
+                        <FloatingLabel
+                          controlId="AddressD"
+                          label={<FormattedMessage id="addressD" />}
+                        >
+                          <Form.Control
+                            type="text"
+                            name="AddressD"
+                            className="form-control"
+                            required
+                            ref={destinationRef}
+                            {...getInputProps({
+                              placeholder: 'Dirección origen',
+                            })}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </OverlayTrigger>
+                  </>
+                )}
+              </PlacesAutocomplete>
               <Form.Control.Feedback type="invalid">
                 <small>Debe seleccionar una direción de origen.</small>
               </Form.Control.Feedback>
@@ -196,18 +364,24 @@ export const CrearViaje = (props) => {
 
           <Form.Group as={Col} className="form-group">
             <Form.Label htmlFor="spaceAvailable" className="form-label">
-              Cupos:
+              <FormattedMessage id="quota" />:
             </Form.Label>
             <div className="col">
-              <Form.Control
-                type="number"
-                name="spaceAvailable"
-                className="form-control"
-                autoComplete="off"
-                required
-                value={spaceAvailable}
-                onChange={(e) => validateUserInput(e)}
-              />
+              <FloatingLabel
+                controlId="Quota"
+                label={<FormattedMessage id="quota" />}
+              >
+                <Form.Control
+                  type="number"
+                  name="spaceAvailable"
+                  className="form-control"
+                  autoComplete="off"
+                  min={1}
+                  required
+                  value={spaceAvailable}
+                  onChange={(e) => validateUserInput(e)}
+                />
+              </FloatingLabel>
               <Form.Control.Feedback type="invalid">
                 <small>Debe ingresar el número de cupos disponibles.</small>
               </Form.Control.Feedback>
@@ -216,13 +390,14 @@ export const CrearViaje = (props) => {
 
           <Form.Group className="form-group">
             <Form.Label htmlFor="fecha" className="form-label">
-              Fecha:
+              <FormattedMessage id="date" />:
             </Form.Label>
             <div className="col">
               <Form.Control
                 type="date"
                 name="fecha"
                 className="form-control"
+                min={outputDate}
                 required
                 defaultValue={outputDate}
                 value={fecha}
@@ -236,13 +411,14 @@ export const CrearViaje = (props) => {
 
           <Form.Group className="form-group">
             <Form.Label htmlFor="hora" className="form-label">
-              Hora:
+              <FormattedMessage id="hour" />:
             </Form.Label>
             <div className="col">
               <Form.Control
                 type="time"
                 name="hora"
                 className="form-control"
+                min={outputHour}
                 required
                 defaultValue={outputHour}
                 value={hora}
@@ -262,7 +438,7 @@ export const CrearViaje = (props) => {
               handleSubmit(e);
             }}
           >
-            Crear
+            <FormattedMessage id="createTravel_button" />
           </button>
         </Form>
         {/* <Map></Map> */}

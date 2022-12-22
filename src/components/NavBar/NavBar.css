@@ -1,0 +1,24 @@
+.tittle {
+  font-family: 'Bubblegum Sans';
+  font-style: normal;
+  cursor: pointer;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' -25, 'opsz' 48;
+  font-size: 2.5rem;
+}
+
+.Menu-Body-Options .Profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  cursor: pointer;
+}
+/*# sourceMappingURL=NavBar.css.map */

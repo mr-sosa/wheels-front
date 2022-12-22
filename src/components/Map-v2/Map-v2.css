@@ -1,0 +1,97 @@
+.map {
+  border-radius: 0 0 0.5rem 0;
+}
+
+.map .tt-icon {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.map .tt-icon-size {
+  height: 18px !important;
+  width: 18px !important;
+}
+
+.map .icon-spacing-right {
+  margin-right: 17px;
+  margin-top: 22px;
+}
+
+.map .icon-spacing-left {
+  margin-left: 12px;
+  margin-top: 24px;
+}
+
+.map .tt-icon.-finish.-white {
+  height: 17px;
+  width: 14px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='17' viewBox='0 0 14 17'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill-rule='nonzero' stroke='white' d='M-20.5-19.5h55v55h-55z'/%3E%3Cpath fill='white' d='M5.811 2.194V0H8.02v2.28h1.765V0H14v16.406h-2.108V6.837H9.784V4.558H8.019v2.28H5.811v-2.28H7.92V2.28H5.933v2.193H3.946v2.194H2.108v9.74H0V0h3.946v2.194h1.865zm4.316 2.364h1.765V2.28h-1.765v2.278zM2.108 2.28v2.108h1.717V2.28H2.108z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.map .tt-icon.-start.-white {
+  height: 16px;
+  width: 16px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill-rule='nonzero' stroke='white' d='M-19.5-19.5h55v55h-55z'/%3E%3Cpath fill='white' d='M15.493.015a.4.4 0 0 1 .492.493L11.728 15.66a.4.4 0 0 1-.757.036l-2.914-7.55a.4.4 0 0 0-.23-.229L.257 5.015a.4.4 0 0 1 .035-.758l15.2-4.242z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.map .route-input-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.map button.add-stop-btn {
+  margin-left: 30px;
+  margin-top: 24px;
+}
+
+.map .remove-btn {
+  background-color: transparent;
+  border: 0;
+}
+
+.map .remove-btn.hidden {
+  visibility: hidden;
+}
+
+.map .waypoint-marker {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #4a90e2;
+  border: solid 3px #2faaff;
+  border-radius: 50%;
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+  height: 32px !important;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  width: 32px !important;
+  will-change: unset !important;
+}
+
+.map .tt-icon-number {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #ffffff;
+  background-color: #8dc3eb;
+  border-radius: 50%;
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-right: 14px;
+  padding: 8px;
+}
+/*# sourceMappingURL=Map-v2.css.map */
