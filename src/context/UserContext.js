@@ -119,8 +119,6 @@ export function UserProvider({ children }) {
   };
 
   useLayoutEffect(() => {
-    console.log('auth', isAuthenticated);
-    console.log('load', isLoading);
     if (!isLoading && isAuthenticated) {
       let userIdBack = localStorage.getItem('idUserBack');
       if (userIdBack != null) {

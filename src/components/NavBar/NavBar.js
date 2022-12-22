@@ -2,14 +2,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import {
   Navbar,
   Container,
@@ -29,13 +22,10 @@ import {
 import './NavBar.scss';
 import { FormattedMessage } from 'react-intl';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import * as ttapi from '@tomtom-international/web-sdk-services';
 import { useForm } from '../../hooks/useForm';
 import { Icon } from '../Icon/Icon';
 import { Avatar } from '../AvatarImage/Avatar';
 import { useUserBack } from '../../context/UserContext';
-import { toast } from 'react-toastify';
-import { URL } from '../../utils/DeployVariables';
 
 const searchOptions = {
   componentRestrictions: { country: 'col' },
