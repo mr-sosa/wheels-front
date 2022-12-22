@@ -10,7 +10,7 @@ const tomtom_key = process.env.REACT_APP_TOMTOM_API_KEY;
 let URL = process.env.REACT_APP_DEV_BACK_URL;
 let redirectURL = 'http://localhost:3000/CreateUser';
 
-const isProd = process.env.NODE_ENV.toLocaleLowerCase === 'production';
+const isProd = process.env.REACT_APP_IS_PRODUCTION.toLocaleUpperCase === 'TRUE';
 if (isProd) {
   clientId = process.env.REACT_APP_AUTH0_PROD_CLIENTID;
   URL = process.env.REACT_APP_PROD_BACK_URL;
