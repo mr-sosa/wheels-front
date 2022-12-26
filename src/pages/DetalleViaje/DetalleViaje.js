@@ -55,6 +55,25 @@ export const DetalleViaje = (props) => {
     }
   };
 
+  const verifyImage = (user, isUser) => {
+    let src = null;
+    if (user !== null) {
+      src = user?.photo;
+      if (
+        src.includes('.png') ||
+        src.includes('.jpg') ||
+        src.includes('.jpeg')
+      ) {
+        if (isUser) {
+          src = `${URL}users/${user.id}/image`;
+        } else {
+          src = `${URL}vehicles/${user.id}/image`;
+        }
+      }
+    }
+    return src;
+  };
+
   /*Modal*/
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
@@ -188,7 +207,7 @@ export const DetalleViaje = (props) => {
                         <Col>
                           <Avatar
                             name={getAbrebiatonName()}
-                            src={viaje.driver?.photo}
+                            src={verifyImage(viaje.driver, true)}
                             isVerified={viaje.driver?.verifiedUser}
                           />
                         </Col>
@@ -208,6 +227,9 @@ export const DetalleViaje = (props) => {
                     </Row>
                     <hr />
                     <Row className="Vehicle p-3">
+                      <Col md={2}>
+                        <Avatar src={verifyImage(viaje.vehicle, false)} />
+                      </Col>
                       <Col>
                         <Row>
                           <p>

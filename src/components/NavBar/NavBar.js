@@ -26,6 +26,7 @@ import { useForm } from '../../hooks/useForm';
 import { Icon } from '../Icon/Icon';
 import { Avatar } from '../AvatarImage/Avatar';
 import { useUserBack } from '../../context/UserContext';
+import { URL } from '../../utils/DeployVariables';
 
 const searchOptions = {
   componentRestrictions: { country: 'col' },
@@ -175,6 +176,21 @@ export const NavBar = () => {
     } else {
       return 'NN';
     }
+  };
+
+  const verifyImage = () => {
+    let src = null;
+    if (userBack !== null) {
+      src = userBack?.photo;
+      if (
+        src.includes('.png') ||
+        src.includes('.jpg') ||
+        src.includes('.jpeg')
+      ) {
+        src = `${URL}users/${userIdBack}/image`;
+      }
+    }
+    return src;
   };
 
   const [userIdBack, setUserIdBack] = useState();
@@ -412,7 +428,7 @@ export const NavBar = () => {
                       >
                         <Avatar
                           name={getAbrebiatonName()}
-                          src={userBack?.photo}
+                          src={verifyImage()}
                           isVerified={userBack?.verifiedUser}
                         />
                         <h5>{userBack?.name}</h5>

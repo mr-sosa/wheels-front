@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './Avatar.scss';
 
 export const Avatar = ({ src, name, isVerified, isActive, ...rest }) => {
@@ -51,7 +52,14 @@ export const Avatar = ({ src, name, isVerified, isActive, ...rest }) => {
         <></>
       )}
       {src ? (
-        <img className="Image" alt={name} src={src} {...rest} />
+        <img
+          className="Image"
+          alt={name}
+          src={src}
+          id="avatar-image"
+          referrerPolicy="no-referrer"
+          {...rest}
+        />
       ) : (
         <span className="Name" {...rest}>
           {name}

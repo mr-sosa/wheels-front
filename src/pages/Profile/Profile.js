@@ -26,6 +26,21 @@ export const Profile = (props) => {
     }
   };
 
+  const verifyImage = () => {
+    let src = null;
+    if (userBack !== null) {
+      src = userBack?.photo;
+      if (
+        src.includes('.png') ||
+        src.includes('.jpg') ||
+        src.includes('.jpeg')
+      ) {
+        src = `${URL}users/${userBack.id}/image`;
+      }
+    }
+    return src;
+  };
+
   const getAge = () => {
     let res = '';
     if (userBack != null) {
@@ -104,7 +119,7 @@ export const Profile = (props) => {
               <Col sm={3} className="Col2">
                 <Avatar
                   name={getAbrebiatonName()}
-                  src={userBack?.photo}
+                  src={verifyImage()}
                   isVerified={userBack?.verifiedUser}
                 />
               </Col>

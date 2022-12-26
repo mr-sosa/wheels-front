@@ -42,21 +42,20 @@ export const AplicarAViaje = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    console.log(query);
     fetch(`${URL}drivertravels/?${query}`)
       .then((response) => response.json())
       .then(
         (data) => {
-          if (data.numItems === 0) {
+          if (data.numItems === 0 && query.includes('state')) {
             toast.error(<FormattedMessage id="toast_error_searchTravels" />);
-            setIsLoaded(true);
-            setDriverTravels([]);
-          } else {
+          } else if (query.includes('state')) {
             toast.success(
               <FormattedMessage id="toast_success_searchTravels" />,
             );
-            setIsLoaded(true);
-            setDriverTravels(data.data);
           }
+          setIsLoaded(true);
+          setDriverTravels(data.data);
         },
         (error) => {
           toast.error(<FormattedMessage id="toast_error_searchTravels" />);
@@ -102,46 +101,50 @@ export const AplicarAViaje = () => {
             <FormattedMessage id="list_driverTravel_tittle" />
           </h2>
           <div className="sm-4 center">
-            <ListGroup as="ol" variant="flush" className="DriverTravelList">
-              {driverTravels.map((elm, index) => (
-                <ListGroup.Item
-                  as={Row}
-                  className="DriverTravel d-flex align-items-center"
-                  key={index}
-                >
-                  <Col sm={4}>
-                    <div className="fw-bold">
-                      <FormattedMessage id="addressO" /> {elm.origin.address}
-                    </div>
-                    <div className="fw-bold">
-                      <FormattedMessage id="addressD" />{' '}
-                      {elm.destination.address}
-                    </div>
-                  </Col>
-                  <Col sm={4} className="datos">
-                    <Col>
+            {driverTravels.length === 0 ? (
+              <FormattedMessage id="list_driverTravel_NoTravels" />
+            ) : (
+              <ListGroup as="ol" variant="flush" className="DriverTravelList">
+                {driverTravels.map((elm, index) => (
+                  <ListGroup.Item
+                    as={Row}
+                    className="DriverTravel d-flex align-items-center"
+                    key={index}
+                  >
+                    <Col sm={4}>
                       <div className="fw-bold">
-                        <FormattedMessage id="list_driverTravel_date" />
-                        {elm.date.split('T')[0]}
+                        <FormattedMessage id="addressO" /> {elm.origin.address}
                       </div>
                       <div className="fw-bold">
-                        <FormattedMessage id="list_driverTravel_hour" />
-                        {getHour(elm.date)}
+                        <FormattedMessage id="addressD" />{' '}
+                        {elm.destination.address}
                       </div>
                     </Col>
-                    <Badge as={Col} bg="primary" pill>
-                      <FormattedMessage id="list_driverTravel_quota" />
-                      {elm.spaceAvailable}
-                    </Badge>
-                  </Col>
-                  <Col sm={3}>
-                    <Button onClick={() => navigate(`/Viaje/${elm.id}`)}>
-                      <FormattedMessage id="list_driverTravel_button" />
-                    </Button>
-                  </Col>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+                    <Col sm={4} className="datos">
+                      <Col>
+                        <div className="fw-bold">
+                          <FormattedMessage id="list_driverTravel_date" />
+                          {elm.date.split('T')[0]}
+                        </div>
+                        <div className="fw-bold">
+                          <FormattedMessage id="list_driverTravel_hour" />
+                          {getHour(elm.date)}
+                        </div>
+                      </Col>
+                      <Badge as={Col} bg="primary" pill>
+                        <FormattedMessage id="list_driverTravel_quota" />
+                        {elm.spaceAvailable}
+                      </Badge>
+                    </Col>
+                    <Col sm={3}>
+                      <Button onClick={() => navigate(`/Viaje/${elm.id}`)}>
+                        <FormattedMessage id="list_driverTravel_button" />
+                      </Button>
+                    </Col>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            )}
           </div>
         </div>
       </>

@@ -67,6 +67,8 @@ const spanish = {
     preferences_TWOPERSONBACK: 'Máx. 2 personas atrás',
     preferences_FASTACEPTATION: 'Aceptación automática',
     list_driverTravel_tittle: 'Viajes disponibles',
+    list_driverTravel_NoTravels:
+      'No se encontraron viajes disponibles en este momento',
     list_driverTravel_hour: 'Hora: ',
     list_driverTravel_date: 'Fecha: ',
     list_driverTravel_quota: 'Cupos: ',
