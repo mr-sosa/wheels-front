@@ -26,6 +26,7 @@ export const AplicarAViaje = () => {
     return hour;
   };
 
+  // eslint-disable-next-line no-unused-vars
   let [searchParams, setSearchParams] = useSearchParams();
 
   let query = useMemo(() => {
@@ -42,7 +43,6 @@ export const AplicarAViaje = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    console.log(query);
     fetch(`${URL}drivertravels/?${query}`)
       .then((response) => response.json())
       .then(
@@ -106,41 +106,43 @@ export const AplicarAViaje = () => {
             ) : (
               <ListGroup as="ol" variant="flush" className="DriverTravelList">
                 {driverTravels.map((elm, index) => (
-                  <ListGroup.Item
-                    as={Row}
-                    className="DriverTravel d-flex align-items-center"
-                    key={index}
-                  >
-                    <Col sm={4}>
-                      <div className="fw-bold">
-                        <FormattedMessage id="addressO" /> {elm.origin.address}
-                      </div>
-                      <div className="fw-bold">
-                        <FormattedMessage id="addressD" />{' '}
-                        {elm.destination.address}
-                      </div>
-                    </Col>
-                    <Col sm={4} className="datos">
-                      <Col>
+                  <ListGroup.Item as="li" key={index}>
+                    <Row
+                      className="DriverTravel d-flex align-items-center"
+                      key={index}
+                    >
+                      <Col sm={4} xs={6}>
                         <div className="fw-bold">
-                          <FormattedMessage id="list_driverTravel_date" />
-                          {elm.date.split('T')[0]}
+                          <FormattedMessage id="addressO" />{' '}
+                          {elm.origin.address}
                         </div>
                         <div className="fw-bold">
-                          <FormattedMessage id="list_driverTravel_hour" />
-                          {getHour(elm.date)}
+                          <FormattedMessage id="addressD" />{' '}
+                          {elm.destination.address}
                         </div>
                       </Col>
-                      <Badge as={Col} bg="primary" pill>
-                        <FormattedMessage id="list_driverTravel_quota" />
-                        {elm.spaceAvailable}
-                      </Badge>
-                    </Col>
-                    <Col sm={3}>
-                      <Button onClick={() => navigate(`/Viaje/${elm.id}`)}>
-                        <FormattedMessage id="list_driverTravel_button" />
-                      </Button>
-                    </Col>
+                      <Col sm={4} xs={6} className="datos">
+                        <Col>
+                          <div className="fw-bold">
+                            <FormattedMessage id="list_driverTravel_date" />
+                            {elm.date.split('T')[0]}
+                          </div>
+                          <div className="fw-bold">
+                            <FormattedMessage id="list_driverTravel_hour" />
+                            {getHour(elm.date)}
+                          </div>
+                        </Col>
+                        <Badge as={Col} bg="primary" pill>
+                          <FormattedMessage id="list_driverTravel_quota" />
+                          {elm.spaceAvailable}
+                        </Badge>
+                      </Col>
+                      <Col sm={3} xs={12}>
+                        <Button onClick={() => navigate(`/Viaje/${elm.id}`)}>
+                          <FormattedMessage id="list_driverTravel_button" />
+                        </Button>
+                      </Col>
+                    </Row>
                   </ListGroup.Item>
                 ))}
               </ListGroup>

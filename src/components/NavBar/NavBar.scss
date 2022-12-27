@@ -17,3 +17,55 @@
     cursor: pointer;
   }
 }
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+
+  .Tittle {
+    //max-width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 6.875rem;
+    cursor: pointer;
+
+    .Logo {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .SearchBox {
+    max-width: fit-content;
+
+    form {
+      width: 50vw;
+      .input-group {
+        flex-wrap: nowrap;
+      }
+    }
+
+    @media (max-width: 55rem) {
+      visibility: hidden;
+      display: block;
+      width: 0;
+      height: 0;
+    }
+  }
+  .Button {
+    width: 7.5rem;
+    max-width: fit-content;
+  }
+}
+
+@media (max-width: 55rem) {
+  .navbar {
+    justify-content: space-around;
+    .SearchBox {
+      visibility: hidden;
+      display: block;
+      width: 0;
+      height: 0;
+    }
+  }
+}

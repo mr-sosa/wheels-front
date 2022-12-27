@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './Avatar.scss';
 
 export const Avatar = ({ src, name, isVerified, isActive, ...rest }) => {

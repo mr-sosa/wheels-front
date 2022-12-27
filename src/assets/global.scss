@@ -1,8 +1,13 @@
-:root {
-  --bs-primary-rgb: rgb(19, 64, 116);
+html {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
 }
 
 body {
+  margin: 0px;
+  min-height: 100%;
+  width: 100%;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
@@ -76,7 +81,6 @@ code {
       justify-content: center;
       align-items: center;
 
-      width: 5vw;
       min-width: fit-content;
       height: 3.125rem;
       padding: 10px;
