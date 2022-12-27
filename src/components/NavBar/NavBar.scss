@@ -61,7 +61,7 @@
 @media (max-width: 55rem) {
   .navbar {
     justify-content: space-around;
-    .SearchBox {
+    .SearchBox * {
       visibility: hidden;
       display: block;
       width: 0;
