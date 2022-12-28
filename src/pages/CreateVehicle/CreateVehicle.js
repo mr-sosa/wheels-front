@@ -118,6 +118,7 @@ export const CreateVehicle = () => {
                 <Form.Group
                   as={Col}
                   md="3"
+                  sm="6"
                   controlId="validationFormikLicensePlate"
                 >
                   <Form.Label>
@@ -137,7 +138,12 @@ export const CreateVehicle = () => {
                     {errors.licensePlate}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationFormikBrand">
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikBrand"
+                >
                   <Form.Label>
                     <FormattedMessage id="createVehicle_brand" />
                   </Form.Label>
@@ -155,7 +161,12 @@ export const CreateVehicle = () => {
                     {errors.brand}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationFormikSerie">
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikSerie"
+                >
                   <Form.Label>
                     <FormattedMessage id="createVehicle_serie" />
                   </Form.Label>
@@ -171,7 +182,12 @@ export const CreateVehicle = () => {
                     {errors.serie}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationFormikModel">
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikModel"
+                >
                   <Form.Label>
                     <FormattedMessage id="createVehicle_model" />
                   </Form.Label>
@@ -191,7 +207,12 @@ export const CreateVehicle = () => {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col} md="3" controlId="validationFormikType">
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikType"
+                >
                   <Form.Label>
                     <FormattedMessage id="createVehicle_type" />
                   </Form.Label>
@@ -212,7 +233,12 @@ export const CreateVehicle = () => {
                     {errors.type}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationFormikColor">
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikColor"
+                >
                   <Form.Label>
                     <FormattedMessage id="createVehicle_color" />
                   </Form.Label>
@@ -240,6 +266,7 @@ export const CreateVehicle = () => {
                 <Form.Group
                   as={Col}
                   md="6"
+                  sm="12"
                   controlId="validationFormikSoatExpedition"
                 >
                   <Form.Label>
@@ -259,7 +286,12 @@ export const CreateVehicle = () => {
                 </Form.Group>
               </Row>
               <Row>
-                <Form.Group as={Col} md="6" controlId="validationFormikPhoto">
+                <Form.Group
+                  as={Col}
+                  md="6"
+                  sm="12"
+                  controlId="validationFormikPhoto"
+                >
                   <Form.Label>
                     <FormattedMessage id="createVehicle_photo" />
                   </Form.Label>
