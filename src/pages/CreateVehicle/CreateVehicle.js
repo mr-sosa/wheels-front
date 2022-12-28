@@ -5,6 +5,9 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import './CreateVehicle.scss';
 import { FormattedMessage } from 'react-intl';
+import { useUserBack } from '../../context/UserContext';
+import { URL } from '../../utils/DeployVariables';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   licensePlate: yup
@@ -28,21 +31,55 @@ const schema = yup.object().shape({
     .min(2000, <FormattedMessage id="createVehicle_model_invalid" />),
   type: yup.string().required(<FormattedMessage id="requiredField" />),
   color: yup.string().required(<FormattedMessage id="requiredField" />),
-  photo: yup.mixed().required(<FormattedMessage id="requiredField" />),
   soatExpedition: yup.mixed().required(<FormattedMessage id="requiredField" />),
+  photo: yup.mixed().required(<FormattedMessage id="requiredField" />),
 });
 
 export const CreateVehicle = () => {
-  var URL = process.env.REACT_APP_DEV_BACK_URL;
-  const isProd =
-    process.env.REACT_APP_IS_PRODUCTION.toLocaleUpperCase === 'TRUE';
-  if (isProd) {
-    URL = process.env.REACT_APP_PROD_BACK_URL;
-  }
+  const { userBack } = useUserBack();
 
-  const [formValues, handleInputChange] = useForm({});
+  const onSubmit = (values) => {
+    let { photo, ...data } = values;
+    let date = new Date(data.soatExpedition);
+    data = {
+      ...data,
+      user: userBack.id,
+      photo: 'http://placeimg.com/640/480/transport',
+      model: data.model + '',
+      soatExpedition: date.toISOString(),
+    };
+    date.setFullYear(date.getFullYear() + 1);
+    data = { ...data, soatExpiration: date.toISOString() };
+    data = JSON.stringify(data);
 
-  const onSubmit = () => {};
+    fetch(`${URL}vehicles/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        const formData = new FormData();
+        formData.append('file', photo);
+
+        fetch(`${URL}vehicles/${result.id}/upload`, {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            toast.success(
+              <FormattedMessage id="toast_success_createdVehicle" />,
+            );
+          })
+          .catch((error) => console.log('error', error));
+      })
+      .catch((error) => console.log('error', error));
+  };
+
   return (
     <>
       <div className="createVehicle-container">
@@ -51,7 +88,7 @@ export const CreateVehicle = () => {
         </h2>
         <Formik
           validationSchema={schema}
-          onSubmit={console.log}
+          onSubmit={(values) => onSubmit(values)}
           initialValues={{
             licensePlate: '',
             brand: '',
@@ -60,6 +97,7 @@ export const CreateVehicle = () => {
             type: '',
             color: '',
             soatExpedition: '',
+            photo: {},
           }}
         >
           {({
@@ -159,14 +197,15 @@ export const CreateVehicle = () => {
                   </Form.Label>
                   <Form.Control
                     name="type"
+                    value={values.type}
                     onChange={handleChange}
                     isInvalid={!!errors.type}
                     as={FormSelect}
                   >
-                    <option value="">Choose One</option>
-                    <option value="CAR">Car</option>
-                    <option value="ELECTRICCAR">Electric car</option>
-                    <option value="MOTORCYCLE">Mototrcycle</option>
+                    <option value="">Escoje uno</option>
+                    <option value="CAR">Carro</option>
+                    <option value="ELECTRICCAR">Carro eléctrico</option>
+                    <option value="MOTORCYCLE">Motocicleta</option>
                   </Form.Control>
 
                   <Form.Control.Feedback type="invalid">
@@ -178,13 +217,20 @@ export const CreateVehicle = () => {
                     <FormattedMessage id="createVehicle_color" />
                   </Form.Label>
                   <Form.Control
-                    type="text"
                     name="color"
-                    maxLength={15}
                     value={values.color}
                     onChange={handleChange}
                     isInvalid={!!errors.color}
-                  />
+                    as={FormSelect}
+                  >
+                    <option value="">Escoje uno</option>
+                    <option value="BLANCO">Blanco</option>
+                    <option value="NEGRO">Negro</option>
+                    <option value="AZUL">Azul</option>
+                    <option value="ROJO">Rojo</option>
+                    <option value="VERDE">Verde</option>
+                    <option value="PLATEADO">Plateado</option>
+                  </Form.Control>
 
                   <Form.Control.Feedback type="invalid">
                     {errors.color}
@@ -209,6 +255,28 @@ export const CreateVehicle = () => {
 
                   <Form.Control.Feedback type="invalid">
                     {errors.soatExpedition}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Row>
+                <Form.Group as={Col} md="6" controlId="validationFormikPhoto">
+                  <Form.Label>
+                    <FormattedMessage id="createVehicle_photo" />
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept=".jpg, .png, .jpeg"
+                    name="photo"
+                    onChange={(e) => {
+                      e.target.files[0] !== null
+                        ? (values.photo = e.target.files[0])
+                        : (values.photo = {});
+                    }}
+                    isInvalid={!!errors.photo}
+                  />
+
+                  <Form.Control.Feedback type="invalid">
+                    {errors.photo}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Row>

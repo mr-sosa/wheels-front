@@ -21,6 +21,24 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  .btn:hover {
+    background-color: #0b2646;
+    border-color: #0b2646;
+  }
+  .btn:active {
+    background-color: #0b2646;
+    border-color: #0b2646;
+  }
+  .btn:focus {
+    background-color: #0b2646;
+    border-color: #0b2646;
+    box-shadow: 0 0 0 0.25rem #8da9c4;
+  }
+  .badge {
+    background-color: #134074 !important;
+    border-color: #134074 !important;
+  }
 }
 body::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -88,7 +106,7 @@ code {
       background: #dde0e3;
       box-shadow: 0px 4px 5px rgba(255, 255, 255, 0.3);
       border-radius: 0.8125rem;
-      color: #1d2d44;
+      color: #0b2646;
 
       cursor: pointer;
 
@@ -105,7 +123,7 @@ code {
     }
 
     &-style:hover {
-      background: #121a2b;
+      background: #0b2646;
       color: #ffffff !important;
     }
   }

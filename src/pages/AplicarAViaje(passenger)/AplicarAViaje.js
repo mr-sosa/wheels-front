@@ -127,12 +127,12 @@ export const AplicarAViaje = () => {
                             <FormattedMessage id="list_driverTravel_date" />
                             {elm.date.split('T')[0]}
                           </div>
-                          <div className="fw-bold">
+                          <div className="fw-bold text-end">
                             <FormattedMessage id="list_driverTravel_hour" />
                             {getHour(elm.date)}
                           </div>
                         </Col>
-                        <Badge as={Col} bg="primary" pill>
+                        <Badge as={Col} pill>
                           <FormattedMessage id="list_driverTravel_quota" />
                           {elm.spaceAvailable}
                         </Badge>

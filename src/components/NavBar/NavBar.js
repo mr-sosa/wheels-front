@@ -304,7 +304,7 @@ export const NavBar = () => {
         </Navbar.Brand>
         <Nav className="SearchBox">
           <Form className="d-flex">
-            <InputGroup>
+            <InputGroup as={Row} className="">
               {/*
                 <div ref={addORef} id="AddO"></div>
                 */}
@@ -363,7 +363,7 @@ export const NavBar = () => {
                         </Popover>
                       }
                     >
-                      <Col>
+                      <Col xs={3} className="p-0">
                         <FloatingLabel label={<FormattedMessage id="origin" />}>
                           <Form.Control
                             type="text"
@@ -437,7 +437,7 @@ export const NavBar = () => {
                         </Popover>
                       }
                     >
-                      <Col>
+                      <Col xs={3} className="p-0">
                         <FloatingLabel
                           label={<FormattedMessage id="destination" />}
                         >
@@ -459,7 +459,7 @@ export const NavBar = () => {
                 )}
               </PlacesAutocomplete>
 
-              <Col>
+              <Col xs={3} className="p-0">
                 <FloatingLabel label={<FormattedMessage id="date" />}>
                   <Form.Control
                     aria-label="Date"
@@ -472,7 +472,7 @@ export const NavBar = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col>
+              <Col xs={2} className="p-0">
                 <FloatingLabel label={<FormattedMessage id="quota" />}>
                   <Form.Control
                     aria-label="quota"
@@ -484,7 +484,7 @@ export const NavBar = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col className="d-flex ">
+              <Col className="d-flex p-0">
                 <Button variant="outline-success" onClick={search}>
                   <FormattedMessage id="search" />
                 </Button>
@@ -540,7 +540,10 @@ export const NavBar = () => {
                       </>
                     ) : (
                       <>
-                        <ListGroup.Item onClick={makeDriver}>
+                        <ListGroup.Item
+                          onClick={makeDriver}
+                          className="makeDriver"
+                        >
                           Hazte contuctor
                         </ListGroup.Item>
                       </>

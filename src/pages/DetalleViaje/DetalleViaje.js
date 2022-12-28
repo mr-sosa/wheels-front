@@ -151,9 +151,46 @@ export const DetalleViaje = (props) => {
     );
   }, [viaje]);
 
+  const getPassengers = useMemo(() => {
+    return viaje !== null ? (
+      <>
+        {viaje.passengers?.map((passenger) => (
+          <Row
+            className="Driver p-2"
+            onClick={() => navigate(`/Profile/${passenger?.id}`)}
+          >
+            <Col md={4}>
+              <Row>
+                <p>{passenger?.name}</p>
+              </Row>
+            </Col>
+            <Col md={2}>
+              <Col>
+                <Avatar
+                  name={getAbrebiatonName()}
+                  src={verifyImage(passenger, true)}
+                  isVerified={passenger?.verifiedUser}
+                />
+              </Col>
+              <Col>
+                <Icon icon="chevron_right" />
+              </Col>
+            </Col>
+          </Row>
+        ))}
+      </>
+    ) : (
+      <></>
+    );
+  }, [viaje]);
+
   const getMap = useMemo(() => {
     return viaje !== null ? (
-      <MapV2 locale={props.locale} destinations={getDestinations} />
+      <MapV2
+        locale={props.locale}
+        destinations={getDestinations}
+        className="map col-sm-5 col-12"
+      />
     ) : (
       <></>
     );
@@ -172,7 +209,7 @@ export const DetalleViaje = (props) => {
         <div className="container-fluid d-flex justify-content-center">
           {viaje !== null && status === 200 ? (
             <>
-              <div className="Detalle p-4 col-sm-5">
+              <div className="Detalle p-4 col-sm-6 col-12">
                 <div className="row">
                   <h2>{getDate()}</h2>
                   <h6>{getHour()}</h6>
@@ -246,6 +283,18 @@ export const DetalleViaje = (props) => {
                     </Row>
                   </div>
                 </div>
+                {viaje?.passengers.length !== 0 ? (
+                  <>
+                    <hr className="Divider" />
+                    <h5>
+                      <FormattedMessage id="detailTravel_passengers" />
+                    </h5>
+                    {getPassengers}
+                    <hr />
+                  </>
+                ) : (
+                  <></>
+                )}
                 {userBack !== null ? (
                   <Button
                     onClick={handleShowModal}

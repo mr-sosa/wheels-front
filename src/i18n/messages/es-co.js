@@ -74,6 +74,7 @@ const spanish = {
     list_driverTravel_quota: 'Cupos: ',
     list_driverTravel_button: 'Ver Detalle',
     detailTravel_preferences: 'Preferencias:',
+    detailTravel_passengers: 'Pasajeros',
     detailTravel_button: 'Reservar Viaje',
     detailTravel_tooltipMessage: 'Es necesario iniciar sesión primero',
     detailTravel_ModalTittle: 'Reservar Viaje',
@@ -88,6 +89,7 @@ const spanish = {
     toast_error_searchTravels:
       'No se encontraron viajes con los parámetros solicitados',
     toast_success_makedriver: 'Ahora eres un usuario conductor',
+    toast_success_createdVehicle: 'Se ha creado el vehículo correctamente',
   },
 };
 

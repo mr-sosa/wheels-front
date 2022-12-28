@@ -6,7 +6,7 @@ import './Map-v2.scss';
 import { tomtom_key } from '../../utils/DeployVariables';
 
 const bogota = { lat: 4.60971, lng: -74.08175 };
-export const MapV2 = (props) => {
+export const MapV2 = ({ destinations, locale, ...rest }) => {
   const mapElement = useRef();
   const [map, setMap] = useState({});
   const [locations, setLocations] = useState({ str: '', count: 0 });
@@ -34,7 +34,7 @@ export const MapV2 = (props) => {
       container: mapElement.current,
       zoom: 13,
       center: [bogota.lng, bogota.lat],
-      language: props.locale,
+      language: locale,
       stylesVisibility: {
         trafficIncidents: true,
         poi: false,
@@ -65,8 +65,8 @@ export const MapV2 = (props) => {
       let resultStr = '';
       let count = 0;
 
-      if (props.destinations !== undefined) {
-        props.destinations?.forEach((dest) => {
+      if (destinations !== undefined) {
+        destinations?.forEach((dest) => {
           if (dest.lng !== undefined && dest.lat !== undefined) {
             count += 1;
             resultStr += dest.lng + ',' + dest.lat + ':';
@@ -85,9 +85,9 @@ export const MapV2 = (props) => {
         return;
       }
 
-      if (props.destinations !== undefined) {
-        let maxIndex = props.destinations?.length - 1;
-        props.destinations?.forEach((dest, index) => {
+      if (destinations !== undefined) {
+        let maxIndex = destinations?.length - 1;
+        destinations?.forEach((dest, index) => {
           let position = { lng: dest.lng, lat: dest.lat };
 
           let marker = new tt.Marker({
@@ -158,7 +158,7 @@ export const MapV2 = (props) => {
     return () => {
       map.remove();
     };
-  }, [props]);
+  }, [destinations, locale]);
 
-  return <div ref={mapElement} className="map col-sm-5"></div>;
+  return <div ref={mapElement} {...rest}></div>;
 };
