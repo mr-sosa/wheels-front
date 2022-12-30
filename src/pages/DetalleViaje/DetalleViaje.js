@@ -219,7 +219,9 @@ export const DetalleViaje = (props) => {
       <MapV2
         locale={props.locale}
         destinations={getDestinations}
-        className="map col-md-6 col-12"
+        className="map"
+        sm={{ order: 'last', span: 6 }}
+        xs={{ order: 'fisrt', span: 12 }}
       />
     ) : (
       <></>
@@ -241,7 +243,7 @@ export const DetalleViaje = (props) => {
             <Row>
               <Col
                 className="Detalle p-4"
-                md={6}
+                sm={{ order: 'fisrt', span: 6 }}
                 xs={{ order: 'last', span: 12 }}
               >
                 <div className="row">

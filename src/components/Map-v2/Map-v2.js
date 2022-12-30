@@ -4,6 +4,7 @@ import * as ttapi from '@tomtom-international/web-sdk-services';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import './Map-v2.scss';
 import { tomtom_key } from '../../utils/DeployVariables';
+import { Col } from 'react-bootstrap';
 
 const bogota = { lat: 4.60971, lng: -74.08175 };
 export const MapV2 = ({ destinations, locale, ...rest }) => {
@@ -160,5 +161,5 @@ export const MapV2 = ({ destinations, locale, ...rest }) => {
     };
   }, [destinations, locale]);
 
-  return <div ref={mapElement} {...rest}></div>;
+  return <Col ref={mapElement} {...rest}></Col>;
 };
