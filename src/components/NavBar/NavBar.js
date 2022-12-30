@@ -513,7 +513,10 @@ export const NavBar = () => {
                   <Row>
                     <Col
                       className="Profile"
-                      onClick={() => navigate(`/Profile/${userBack.id}`)}
+                      onClick={() => {
+                        navigate(`/Profile/${userBack.id}`);
+                        handleCloseOffcanvas();
+                      }}
                     >
                       <Avatar
                         name={getAbrebiatonName()}
@@ -528,13 +531,21 @@ export const NavBar = () => {
 
                     {userBack && userBack?.isDriver ? (
                       <>
-                        <ListGroup.Item as={Link} to={'/CrearViaje'}>
+                        <ListGroup.Item
+                          as={Link}
+                          to={'/CrearViaje'}
+                          onClick={handleCloseOffcanvas}
+                        >
                           Crear Viaje
                         </ListGroup.Item>
                         <ListGroup.Item>
                           Historial de Viajes realizados
                         </ListGroup.Item>
-                        <ListGroup.Item as={Link} to={'/CreateVehicle'}>
+                        <ListGroup.Item
+                          as={Link}
+                          to={'/CreateVehicle'}
+                          onClick={handleCloseOffcanvas}
+                        >
                           Mis vehiculos
                         </ListGroup.Item>
                       </>

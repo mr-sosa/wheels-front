@@ -1,5 +1,4 @@
 .Detalle {
-  width: 40vw;
   background-color: #ffffff;
   border-radius: 0 0 0 0.5rem;
 
@@ -157,5 +156,18 @@
       letter-spacing: 0.0781rem;
       text-transform: uppercase;
     }
+  }
+}
+
+@media (max-width: 55rem) {
+  .Detalle {
+    top: -0.5rem;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+  .map {
+    height: 45vh;
+    border-radius: 0 0 0.5rem 0.5rem !important;
   }
 }

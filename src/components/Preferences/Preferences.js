@@ -8,7 +8,7 @@ export const Preferences = (props) => {
       case 'LIKESPEAK':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg viewBox="0 0 555.637 495.9">
                 <g transform="matrix(0.616295, 0, 0, 0.508291, 88.370119, 61.607392)">
                   <defs id="defs439">
@@ -193,7 +193,7 @@ export const Preferences = (props) => {
       case 'NOLIKESPEAK':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg viewBox="0 0 555.637 495.9">
                 <g transform="matrix(0.616295, 0, 0, 0.508291, 88.370119, 61.607392)">
                   <defs id="defs439">
@@ -382,7 +382,7 @@ export const Preferences = (props) => {
       case 'LIKEDOGS':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg viewBox="0 0 555.637 495.9">
                 <g transform="matrix(0.714037, 0, 0, 0.757868, 101.540865, 33.82869)">
                   <g>
@@ -469,7 +469,7 @@ export const Preferences = (props) => {
       case 'NOLIKEDOGS':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg viewBox="0 0 555.637 495.9">
                 <g transform="matrix(0.714037, 0, 0, 0.757868, 101.540865, 33.82869)">
                   <g>
@@ -560,7 +560,7 @@ export const Preferences = (props) => {
       case 'LIKEMUSIC':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"
@@ -604,7 +604,7 @@ export const Preferences = (props) => {
       case 'LIKESMOKE':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"
@@ -678,7 +678,7 @@ export const Preferences = (props) => {
       case 'NOLIKESMOKE':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg viewBox="0 0 555.637 495.9">
                 <g transform="matrix(1, 0, 0, 1, 17.792053, -19.762835)">
                   <g>
@@ -750,7 +750,7 @@ export const Preferences = (props) => {
       case 'TWOPERSONBACK':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"
@@ -779,7 +779,7 @@ export const Preferences = (props) => {
       case 'FASTACEPTATION':
         res = (
           <>
-            <Col sm={2} className="Icon">
+            <Col xs={2} className="Icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"

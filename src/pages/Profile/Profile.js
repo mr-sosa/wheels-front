@@ -107,8 +107,8 @@ export const Profile = (props) => {
       {userBack && resStatus === 200 ? (
         <>
           <div className="container-fluid Profile p-4">
-            <Row className="mb-3 Part1">
-              <Col sm={8} className="Col1">
+            <Row className="Part1">
+              <Col xs={8} className="Col1">
                 <Row>
                   <h3>{userBack.name}</h3>
                 </Row>
@@ -116,7 +116,7 @@ export const Profile = (props) => {
                   <small>{getAge()}</small>
                 </Row>
               </Col>
-              <Col sm={3} className="Col2">
+              <Col xs={3} className="Col2">
                 <Avatar
                   name={getAbrebiatonName()}
                   src={verifyImage()}
@@ -125,11 +125,13 @@ export const Profile = (props) => {
               </Col>
             </Row>
             <Row className="Part1-2">
-              <Col className="Col1" sm={2}>
+              <Col className="Col1" xs={4} sm={2}>
                 <StarsScore score={parseFloat(userBack.score)} />
               </Col>
-              <Col className="d-flex">{getOpinion()}</Col>
-              <Col sm={2}>
+              <Col className="d-flex" xs={6}>
+                {getOpinion()}
+              </Col>
+              <Col xs={2} sm={4}>
                 <Icon icon="chevron_right" />
               </Col>
             </Row>
@@ -138,7 +140,7 @@ export const Profile = (props) => {
               <Col>
                 {userBack.verifiedMail ? (
                   <Row className="p-2">
-                    <Col sm={2} className="Col1">
+                    <Col xs={2} className="Col1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
@@ -166,7 +168,7 @@ export const Profile = (props) => {
                 )}
                 {userBack.verifiedPhone ? (
                   <Row className="p-2">
-                    <Col sm={2} className="Col1">
+                    <Col xs={2} className="Col1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
@@ -194,7 +196,7 @@ export const Profile = (props) => {
                 )}
                 {userBack.verifiedIC ? (
                   <Row className="p-2">
-                    <Col sm={2} className="Col1">
+                    <Col xs={2} className="Col1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
@@ -222,7 +224,7 @@ export const Profile = (props) => {
                 )}
                 {userBack.verifiedDrivingPass ? (
                   <Row className="p-2">
-                    <Col sm={2} className="Col1">
+                    <Col xs={2} className="Col1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
@@ -250,7 +252,7 @@ export const Profile = (props) => {
                 )}
                 {userBack.verifiedUser ? (
                   <Row className="p-2">
-                    <Col sm={2} className="Col1">
+                    <Col xs={2} className="Col1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"

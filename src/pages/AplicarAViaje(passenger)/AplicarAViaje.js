@@ -113,12 +113,11 @@ export const AplicarAViaje = () => {
                     >
                       <Col sm={4} xs={6}>
                         <div className="fw-bold">
-                          <FormattedMessage id="addressO" />{' '}
-                          {elm.origin.address}
+                          <FormattedMessage id="addressO" /> {elm.origin.name}
                         </div>
                         <div className="fw-bold">
                           <FormattedMessage id="addressD" />{' '}
-                          {elm.destination.address}
+                          {elm.destination.name}
                         </div>
                       </Col>
                       <Col sm={4} xs={6} className="datos">

@@ -84,7 +84,7 @@
     .SearchBox * {
       visibility: hidden;
       display: block;
-      width: 0;
+      width: 0 !important;
       height: 0;
     }
   }

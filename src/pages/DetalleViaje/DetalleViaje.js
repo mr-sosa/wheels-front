@@ -219,7 +219,7 @@ export const DetalleViaje = (props) => {
       <MapV2
         locale={props.locale}
         destinations={getDestinations}
-        className="map col-sm-5 col-12"
+        className="map col-md-6 col-12"
       />
     ) : (
       <></>
@@ -238,8 +238,12 @@ export const DetalleViaje = (props) => {
       >
         <div className="container-fluid d-flex justify-content-center">
           {viaje !== null && status === 200 ? (
-            <>
-              <div className="Detalle p-4 col-sm-6 col-12">
+            <Row>
+              <Col
+                className="Detalle p-4"
+                md={6}
+                xs={{ order: 'last', span: 12 }}
+              >
                 <div className="row">
                   <h2>{getDate()}</h2>
                   <h6>{getHour()}</h6>
@@ -262,7 +266,7 @@ export const DetalleViaje = (props) => {
                       className="Driver p-2"
                       onClick={() => navigate(`/Profile/${viaje.driver?.id}`)}
                     >
-                      <Col md={4}>
+                      <Col xs={7}>
                         <Row>
                           <p>{viaje.driver?.name}</p>
                         </Row>
@@ -270,17 +274,19 @@ export const DetalleViaje = (props) => {
                           <StarsScore score={parseFloat(viaje.driver?.score)} />
                         </Row>
                       </Col>
-                      <Col md={2}>
-                        <Col>
-                          <Avatar
-                            name={getAbrebiatonName()}
-                            src={verifyImage(viaje.driver, true)}
-                            isVerified={viaje.driver?.verifiedUser}
-                          />
-                        </Col>
-                        <Col>
-                          <Icon icon="chevron_right" />
-                        </Col>
+                      <Col xs={5}>
+                        <Row className="align-items-center">
+                          <Col xs={6}>
+                            <Avatar
+                              name={getAbrebiatonName()}
+                              src={verifyImage(viaje.driver, true)}
+                              isVerified={viaje.driver?.verifiedUser}
+                            />
+                          </Col>
+                          <Col xs={6}>
+                            <Icon icon="chevron_right" />
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                     <hr />
@@ -294,10 +300,10 @@ export const DetalleViaje = (props) => {
                     </Row>
                     <hr />
                     <Row className="Vehicle p-3">
-                      <Col md={2}>
+                      <Col xs={3}>
                         <Avatar src={verifyImage(viaje.vehicle, false)} />
                       </Col>
-                      <Col>
+                      <Col xs={{ span: 8, offset: 1 }}>
                         <Row>
                           <p>
                             <strong>
@@ -326,7 +332,7 @@ export const DetalleViaje = (props) => {
                   <></>
                 )}
                 {getButton}
-              </div>
+              </Col>
               <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
                   <Modal.Title>
@@ -346,7 +352,7 @@ export const DetalleViaje = (props) => {
                 </Modal.Footer>
               </Modal>
               {getMap}
-            </>
+            </Row>
           ) : (
             <>
               <div className="NoPage">
