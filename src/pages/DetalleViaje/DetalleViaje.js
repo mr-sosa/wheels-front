@@ -184,6 +184,36 @@ export const DetalleViaje = (props) => {
     );
   }, [viaje]);
 
+  const getButton = useMemo(() => {
+    let res = <></>;
+
+    if (userBack !== null) {
+      if (userBack.id !== viaje?.driver?.id) {
+        res = (
+          <Button onClick={handleShowModal} disabled={userBack === null}>
+            <FormattedMessage id="detailTravel_button" />
+          </Button>
+        );
+      }
+    } else {
+      res = (
+        <OverlayTrigger
+          placement="right"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip}
+        >
+          <span>
+            <Button onClick={handleShowModal} disabled={userBack === null}>
+              <FormattedMessage id="detailTravel_button" />
+            </Button>
+          </span>
+        </OverlayTrigger>
+      );
+    }
+
+    return res;
+  }, [userBack, viaje]);
+
   const getMap = useMemo(() => {
     return viaje !== null ? (
       <MapV2
@@ -295,29 +325,7 @@ export const DetalleViaje = (props) => {
                 ) : (
                   <></>
                 )}
-                {userBack !== null ? (
-                  <Button
-                    onClick={handleShowModal}
-                    disabled={userBack === null}
-                  >
-                    <FormattedMessage id="detailTravel_button" />
-                  </Button>
-                ) : (
-                  <OverlayTrigger
-                    placement="right"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip}
-                  >
-                    <span>
-                      <Button
-                        onClick={handleShowModal}
-                        disabled={userBack === null}
-                      >
-                        <FormattedMessage id="detailTravel_button" />
-                      </Button>
-                    </span>
-                  </OverlayTrigger>
-                )}
+                {getButton}
               </div>
               <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>

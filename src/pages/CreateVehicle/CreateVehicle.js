@@ -1,6 +1,5 @@
 import Form from 'react-bootstrap/Form';
 import { Button, Col, FormSelect, Row } from 'react-bootstrap';
-import { useForm } from '../../hooks/useForm';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import './CreateVehicle.scss';

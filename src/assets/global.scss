@@ -22,6 +22,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  .btn {
+    background: #ffc868;
+    border-color: #ffc868;
+    color: #000000;
+  }
   .btn:hover {
     background-color: #0b2646;
     border-color: #0b2646;
@@ -38,6 +43,20 @@ body {
   .badge {
     background-color: #134074 !important;
     border-color: #134074 !important;
+  }
+
+  .form {
+    &-group {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      align-content: flex-end;
+    }
+
+    &-label {
+      font-weight: bold;
+      margin-right: 2rem;
+    }
   }
 }
 body::-webkit-scrollbar-track {

@@ -23,23 +23,3 @@
     background-color: white;
   }
 }
-
-.form {
-  &-group {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    align-content: flex-end;
-  }
-
-  &-label {
-    font-weight: bold;
-    margin-right: 2rem;
-  }
-}
-
-.btn {
-  background: #ffc868;
-  border-color: #ffc868;
-  color: #000000;
-}

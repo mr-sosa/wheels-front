@@ -8,182 +8,104 @@ import {
   OverlayTrigger,
   Popover,
   Spinner,
+  Button,
+  Row,
+  FormSelect,
 } from 'react-bootstrap';
-import { Autocomplete } from '@react-google-maps/api';
 import './CrearViaje.scss';
-import PlacesAutocomplete from 'react-places-autocomplete';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import { FormattedMessage } from 'react-intl';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { URL } from '../../utils/DeployVariables';
+import { useLayoutEffect } from 'react';
+import { useUserBack } from '../../context/UserContext';
+import { useMemo } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+const schema = yup.object().shape({
+  addressO: yup.string().required(<FormattedMessage id="requiredField" />),
+  addressD: yup.string().required(<FormattedMessage id="requiredField" />),
+  quota: yup
+    .number()
+    .max(7, <FormattedMessage id="quotaTooBig" />)
+    .min(1, <FormattedMessage id="quotaTooSmall" />)
+    .required(<FormattedMessage id="requiredField" />),
+  date: yup.mixed().required(<FormattedMessage id="requiredField" />),
+  hour: yup.string().required(<FormattedMessage id="requiredField" />),
+  vehicle: yup.string().required(<FormattedMessage id="requiredField" />),
+});
 
 export const CrearViaje = (props) => {
-  var urlDriverTravel = process.env.REACT_APP_DEV_BACK_URL + 'drivertravels/';
-  var urlAddress = process.env.REACT_APP_DEV_BACK_URL + 'addresses';
-  const isProd =
-    process.env.REACT_APP_IS_PRODUCTION.toLocaleUpperCase === 'TRUE';
-  if (isProd) {
-    urlDriverTravel = process.env.REACT_APP_PROD_BACK_URL + 'drivertravels/';
-    urlAddress = process.env.REACT_APP_PROD_BACK_URL + 'addresses';
-  }
+  const { userBack } = useUserBack();
+  var urlDriverTravel = URL + 'drivertravels';
+  const navigate = useNavigate();
 
-  const [formValues, handleInputChange] = useForm({});
-  const [validated, setValidated] = useState(false);
-  const [isValid, setIsValid] = useState(false);
-
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [addresses, setAddresses] = useState([]);
 
-  const { direccionO, direccionD, spaceAvailable, fecha, hora } = formValues;
+  const getVehicles = useMemo(
+    () =>
+      userBack?.vehicles?.map((vehicle) => (
+        <option
+          value={vehicle.id}
+          key={vehicle.id}
+        >{`${vehicle.brand} ${vehicle.serie}: ${vehicle.licensePlate}`}</option>
+      )),
+    [userBack],
+  );
 
-  let date = new Date();
-  const outputDate =
-    date.getFullYear() +
-    '-' +
-    String(date.getMonth() + 1).padStart(2, '0') +
-    '-' +
-    String(date.getDate()).padStart(2, '0');
+  const onSubmit = async (values) => {
+    let {
+      addressO: addressO_Id,
+      addressD: addressD_Id,
+      date: partDate,
+      hour,
+      quota,
+      vehicle: vehicle_Id,
+    } = values;
+    let date = new Date(partDate + 'T' + hour);
+    let travel = {
+      spaceAvailable: quota,
+      date: date.toISOString(),
+      origin: addressO_Id,
+      destination: addressD_Id,
+      driver: userBack.id,
+      vehicle: vehicle_Id,
+    };
+    travel = JSON.stringify(travel);
 
-  const outputHour =
-    (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
-    ':' +
-    (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
-
-  // Toast Alert
-  const onTriggerToast = (data) => {
-    let toast = { header: data.header, body: data.body, timeStamp: Date.now() };
-    props.parentCallback(toast);
+    fetch(urlDriverTravel, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: travel,
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          toast.success(<FormattedMessage id="toast_success_createdTravel" />);
+        } else {
+          toast.success(<FormattedMessage id="toast_error_createdTravel" />);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        navigate(`/Viaje/${data.id}`);
+      })
+      .catch((error) => console.log('error', error));
   };
 
-  // Places
-  const originRef = useRef();
-  const destinationRef = useRef();
-
-  //validate form
-  const validateUserInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    console.log(name + '---' + value);
-    switch (name) {
-      case spaceAvailable:
-        if (value > 1) handleInputChange(e);
-        console.log(value);
-        break;
-
-      case fecha:
-        let value_date = new Date(value);
-        if (value_date.getTime() >= Date.now()) handleInputChange(e);
-        break;
-
-      case hora:
-        let value_hour = new Date(Date.now()).setDate(fecha);
-        value_hour.setHours(value);
-        if (value_hour.getTime() >= Date.now()) handleInputChange(e);
-        break;
-
-      default:
-        handleInputChange(e);
-        break;
-    }
-  };
-
-  //Search Direcctions
-  const searchOptions = {};
-
-  const [showD, setShowD] = useState(false);
-  const [addressD, setAddressD] = useState('');
-
-  const handleChangeD = (value) => {
-    setShowD(true);
-    setAddressD(value);
-  };
-
-  const handleSelectD = (value) => {
-    setShowD(false);
-    setAddressD(value);
-  };
-
-  const [showO, setShowO] = useState(false);
-  const [addressO, setAddressO] = useState('');
-
-  const handleChangeO = (value) => {
-    setShowO(true);
-    setAddressO(value);
-  };
-
-  const handleSelectO = (value) => {
-    setShowO(false);
-    setAddressO(value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isValid === false) {
-      onTriggerToast({
-        header: 'Formulario incompleto',
-        body: 'Por favor, dilegencie correctamente el formulario.',
-      });
-      setIsValid(true);
-      return;
-    } else {
-      let driverTravel = {
-        origin: originRef.current.value,
-        destinity: destinationRef.current.value,
-        spaceAvailable: parseInt(formValues.spaceAvailable),
-        date: formValues.fecha + 'T' + formValues.hora + ':00.000Z',
-      };
-      driverTravel = JSON.stringify(driverTravel);
-      console.log(driverTravel);
-      try {
-        let res = await fetch(urlDriverTravel, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: driverTravel,
-        });
-        let resJson = await res.json();
-        //console.log(resJson);
-        //window.location.reload();
-
-        fetch(
-          'http://localhost:3010/api/v1/users/6c7f3b2c-84b5-4c58-b350-f36b10864560/driverTravels/' +
-            resJson.id,
-          {
-            method: 'POST',
-          },
-        );
-
-        onTriggerToast({
-          header: 'Viaje creado',
-          body: 'Se creo el viaje exitosamente.',
-        });
-      } catch (err) {
-        console.log(err);
-        onTriggerToast({
-          header: 'Error',
-          body: `${err}`,
-        });
-      }
-      return; //<Navigate to="/" />;
-    }
-  };
-
-  useEffect(() => {
-    fetch(urlAddress)
+  useLayoutEffect(() => {
+    fetch(`${URL}addresses`)
       .then((response) => response.json())
-      .then(
-        (data) => {
-          setIsLoaded(true);
-          setAddresses(data);
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        },
-      );
+      .then((data) => {
+        setAddresses(data);
+      });
+
     //console.log('data: ' + driverTravels);
-  });
+  }, []);
 
   return (
     <>
@@ -191,257 +113,186 @@ export const CrearViaje = (props) => {
         <h2>
           <FormattedMessage id="createTravel_tittle" />
         </h2>
-        <Form className="crearViaje-form" noValidate validated={validated}>
-          <Form.Group className="form-group">
-            <Form.Label htmlFor="direccionO" className="form-label">
-              <FormattedMessage id="addressO" />
-            </Form.Label>
-            <div className="col">
-              <PlacesAutocomplete
-                value={addressO}
-                onChange={handleChangeO}
-                onSelect={handleSelectO}
-                searchOptions={searchOptions}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading,
-                }) => (
-                  <>
-                    <OverlayTrigger
-                      placement="bottom-start"
-                      show={showO}
-                      overlay={
-                        <Popover id="popover-contained">
-                          <ListGroup as="ul">
-                            {loading && (
-                              <Spinner animation="border" role="status">
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </Spinner>
-                            )}
-                            {suggestions.map((suggestion) => {
-                              const style = suggestion.active
-                                ? {
-                                    backgroundColor: '#121a2b',
-                                    color: '#ffffff',
-                                    cursor: 'pointer',
-                                  }
-                                : {
-                                    backgroundColor: '#ffffff',
-                                    cursor: 'pointer',
-                                  };
+        <Formik
+          validationSchema={schema}
+          onSubmit={(values) => onSubmit(values)}
+          initialValues={{
+            addressO: '',
+            addressD: '',
+            quota: '',
+            date: '',
+            hour: '',
+            vehicle: '',
+          }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            isValid,
+            errors,
+          }) => (
+            <Form
+              className="createVehicle-form"
+              noValidate
+              onSubmit={handleSubmit}
+            >
+              <Row className="mb-3">
+                <Form.Group
+                  as={Col}
+                  md="6"
+                  sm="6"
+                  controlId="validationFormikAddressO"
+                >
+                  <Form.Label>
+                    <FormattedMessage id="createTravel_addressO" />
+                  </Form.Label>
+                  <Form.Control
+                    name="addressO"
+                    value={values.addressO}
+                    onChange={handleChange}
+                    isInvalid={!!errors.addressO}
+                    as={FormSelect}
+                  >
+                    <option value="">Escoje uno</option>
+                    {addresses.map((a) => (
+                      <option value={a.id} key={a.id}>
+                        {a.name}
+                      </option>
+                    ))}
+                  </Form.Control>
 
-                              return (
-                                <ListGroup.Item
-                                  as="li"
-                                  {...getSuggestionItemProps(suggestion, {
-                                    style,
-                                  })}
-                                >
-                                  {suggestion.description}
-                                </ListGroup.Item>
-                              );
-                            })}
-                          </ListGroup>
-                        </Popover>
-                      }
-                    >
-                      <Col>
-                        <FloatingLabel
-                          controlId="AddressO"
-                          label={<FormattedMessage id="addressO" />}
-                        >
-                          <Form.Control
-                            type="text"
-                            name="AddressO"
-                            className="form-control"
-                            required
-                            ref={originRef}
-                            {...getInputProps({
-                              placeholder: 'Dirección origen',
-                            })}
-                          />
-                        </FloatingLabel>
-                      </Col>
-                    </OverlayTrigger>
-                  </>
-                )}
-              </PlacesAutocomplete>
-              <Form.Control.Feedback type="invalid">
-                <small>Debe seleccionar una direción de origen.</small>
-              </Form.Control.Feedback>
-            </div>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.addressO}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md="6"
+                  sm="6"
+                  controlId="validationFormikAddressD"
+                >
+                  <Form.Label>
+                    <FormattedMessage id="createTravel_addressD" />
+                  </Form.Label>
+                  <Form.Control
+                    name="addressD"
+                    value={values.addressD}
+                    onChange={handleChange}
+                    isInvalid={!!errors.addressD}
+                    as={FormSelect}
+                  >
+                    <option value="">Escoje uno</option>
+                    {addresses.map((a) => (
+                      <option value={a.id} key={a.id}>
+                        {a.name}
+                      </option>
+                    ))}
+                  </Form.Control>
 
-          <Form.Group className="form-group">
-            <Form.Label htmlFor="direccionD" className="form-label">
-              <FormattedMessage id="addressD" />
-            </Form.Label>
-            <div className="col">
-              <PlacesAutocomplete
-                value={addressD}
-                onChange={handleChangeD}
-                onSelect={handleSelectD}
-                searchOptions={searchOptions}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading,
-                }) => (
-                  <>
-                    <OverlayTrigger
-                      placement="bottom-start"
-                      show={showD}
-                      overlay={
-                        <Popover id="popover-contained">
-                          <ListGroup as="ul">
-                            {loading && (
-                              <Spinner animation="border" role="status">
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </Spinner>
-                            )}
-                            {suggestions.map((suggestion) => {
-                              const style = suggestion.active
-                                ? {
-                                    backgroundColor: '#121a2b',
-                                    color: '#ffffff',
-                                    cursor: 'pointer',
-                                  }
-                                : {
-                                    backgroundColor: '#ffffff',
-                                    cursor: 'pointer',
-                                  };
+                  <Form.Control.Feedback type="invalid">
+                    {errors.addressD}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikQuota"
+                >
+                  <Form.Label>
+                    <FormattedMessage id="createTravel_quota" />
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="quota"
+                    min={1}
+                    max={7}
+                    value={values.quota}
+                    onChange={handleChange}
+                    isInvalid={!!errors.quota}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.quota}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-                              return (
-                                <ListGroup.Item
-                                  as="li"
-                                  {...getSuggestionItemProps(suggestion, {
-                                    style,
-                                  })}
-                                >
-                                  {suggestion.description}
-                                </ListGroup.Item>
-                              );
-                            })}
-                          </ListGroup>
-                        </Popover>
-                      }
-                    >
-                      <Col>
-                        <FloatingLabel
-                          controlId="AddressD"
-                          label={<FormattedMessage id="addressD" />}
-                        >
-                          <Form.Control
-                            type="text"
-                            name="AddressD"
-                            className="form-control"
-                            required
-                            ref={destinationRef}
-                            {...getInputProps({
-                              placeholder: 'Dirección origen',
-                            })}
-                          />
-                        </FloatingLabel>
-                      </Col>
-                    </OverlayTrigger>
-                  </>
-                )}
-              </PlacesAutocomplete>
-              <Form.Control.Feedback type="invalid">
-                <small>Debe seleccionar una direción de origen.</small>
-              </Form.Control.Feedback>
-            </div>
-          </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikDate"
+                >
+                  <Form.Label>
+                    <FormattedMessage id="createTravel_date" />
+                  </Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="date"
+                    min={new Date().toISOString().split('T')[0]}
+                    value={values.date}
+                    onChange={handleChange}
+                    isInvalid={!!errors.date}
+                  />
 
-          <Form.Group as={Col} className="form-group">
-            <Form.Label htmlFor="spaceAvailable" className="form-label">
-              <FormattedMessage id="quota" />:
-            </Form.Label>
-            <div className="col">
-              <FloatingLabel
-                controlId="Quota"
-                label={<FormattedMessage id="quota" />}
-              >
-                <Form.Control
-                  type="number"
-                  name="spaceAvailable"
-                  className="form-control"
-                  autoComplete="off"
-                  min={1}
-                  required
-                  value={spaceAvailable}
-                  onChange={(e) => validateUserInput(e)}
-                />
-              </FloatingLabel>
-              <Form.Control.Feedback type="invalid">
-                <small>Debe ingresar el número de cupos disponibles.</small>
-              </Form.Control.Feedback>
-            </div>
-          </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.date}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikHour"
+                >
+                  <Form.Label>
+                    <FormattedMessage id="createTravel_hour" />
+                  </Form.Label>
+                  <Form.Control
+                    type="time"
+                    name="hour"
+                    value={values.hour}
+                    onChange={handleChange}
+                    isInvalid={!!errors.hour}
+                  ></Form.Control>
 
-          <Form.Group className="form-group">
-            <Form.Label htmlFor="fecha" className="form-label">
-              <FormattedMessage id="date" />:
-            </Form.Label>
-            <div className="col">
-              <Form.Control
-                type="date"
-                name="fecha"
-                className="form-control"
-                min={outputDate}
-                required
-                defaultValue={outputDate}
-                value={fecha}
-                onChange={(e) => validateUserInput(e)}
-              />
-              <Form.Control.Feedback type="invalid">
-                <small>Debe ingresar la fecha del viaje.</small>
-              </Form.Control.Feedback>
-            </div>
-          </Form.Group>
-
-          <Form.Group className="form-group">
-            <Form.Label htmlFor="hora" className="form-label">
-              <FormattedMessage id="hour" />:
-            </Form.Label>
-            <div className="col">
-              <Form.Control
-                type="time"
-                name="hora"
-                className="form-control"
-                min={outputHour}
-                required
-                defaultValue={outputHour}
-                value={hora}
-                onChange={(e) => validateUserInput(e)}
-              />
-              <Form.Control.Feedback type="invalid">
-                <small>Debe ingresar la hora del viaje.</small>
-              </Form.Control.Feedback>
-            </div>
-          </Form.Group>
-
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={(e) => {
-              setValidated(true);
-              handleSubmit(e);
-            }}
-          >
-            <FormattedMessage id="createTravel_button" />
-          </button>
-        </Form>
-        {/* <Map></Map> */}
+                  <Form.Control.Feedback type="invalid">
+                    {errors.hour}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  sm="6"
+                  controlId="validationFormikVehicle"
+                >
+                  <Form.Label>
+                    <FormattedMessage id="createTravel_vehicle" />
+                  </Form.Label>
+                  <Form.Control
+                    name="vehicle"
+                    onChange={handleChange}
+                    isInvalid={!!errors.vehicle}
+                    as={FormSelect}
+                  >
+                    <option value="">Escoje uno</option>
+                    {getVehicles}
+                  </Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.vehicle}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Button type="submit">
+                <FormattedMessage id="createTravel_tittle" />
+              </Button>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );
