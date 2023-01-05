@@ -29,7 +29,7 @@
         width: 0.9375rem;
       }
       .checked {
-        color: orange;
+        color: #e1ff68;
       }
     }
     .col-md-2 {
@@ -58,7 +58,7 @@
   }
   .Driver:hover {
     cursor: pointer;
-    background-color: #1d2d44d1;
+    background-color: #13315c;
     color: white;
     border-radius: 0.8125rem;
   }
@@ -104,6 +104,15 @@
     .Color {
       color: rgb(112, 140, 145);
       font-weight: 500;
+    }
+  }
+
+  .Button {
+    display: flex;
+    align-items: center;
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
     }
   }
 }
@@ -158,8 +167,15 @@
     }
   }
 }
+.RowContent {
+  width: 90vw;
+}
 
 @media (max-width: 36rem) {
+  .RowContent {
+    width: auto;
+  }
+
   .Detalle {
     top: -0.5rem;
     position: relative;

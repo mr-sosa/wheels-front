@@ -79,6 +79,11 @@ export const DetalleViaje = (props) => {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
+  /*Modal Delete*/
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const handleCloseModalDelete = () => setShowModalDelete(false);
+  const handleShowModalDelete = () => setShowModalDelete(true);
+
   /*Button*/
 
   const onReserve = () => {
@@ -194,6 +199,31 @@ export const DetalleViaje = (props) => {
             <FormattedMessage id="detailTravel_button" />
           </Button>
         );
+      } else {
+        res = (
+          <Row className="justify-content-evenly">
+            <Col xs={6} className="d-flex justify-content-center">
+              <Button
+                onClick={() => navigate(`/Viaje/${viajeId}/Edit`)}
+                disabled={true}
+                className="Button"
+              >
+                <FormattedMessage id="detailTravel_buttonEdit" />
+                <Icon icon="edit" className="Icon" />
+              </Button>
+            </Col>
+            <Col xs={6} className="d-flex justify-content-center">
+              <Button
+                onClick={handleShowModalDelete}
+                disabled={userBack === null}
+                className="Button"
+              >
+                <FormattedMessage id="detailTravel_buttonDelete" />
+                <Icon icon="delete" className="Icon" />
+              </Button>
+            </Col>
+          </Row>
+        );
       }
     } else {
       res = (
@@ -240,7 +270,7 @@ export const DetalleViaje = (props) => {
       >
         <div className="container-fluid d-flex justify-content-center">
           {viaje !== null && status === 200 ? (
-            <Row>
+            <Row className="RowContent">
               <Col
                 className="Detalle p-4"
                 sm={{ order: 'fisrt', span: 6 }}
@@ -254,10 +284,16 @@ export const DetalleViaje = (props) => {
                 <div className="row">
                   <div className="col">
                     <div className="row">
-                      Dirección de Origen: {viaje.origin?.address}
+                      <p>
+                        <strong>Dirección de Origen: </strong>
+                        {viaje.origin?.name} ({viaje.origin?.address})
+                      </p>
                     </div>
                     <div className="row">
-                      Dirección de Destino: {viaje.destination?.address}
+                      <p>
+                        <strong>Dirección de Destino: </strong>
+                        {viaje.destination?.name} ({viaje.destination?.address})
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -349,6 +385,24 @@ export const DetalleViaje = (props) => {
                     <FormattedMessage id="detailTravel_ModalButtonCancel" />
                   </Button>
                   <Button variant="primary" onClick={() => onReserve()}>
+                    <FormattedMessage id="detailTravel_ModalButtonAcept" />
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+              <Modal show={showModalDelete} onHide={handleCloseModalDelete}>
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    <FormattedMessage id="detailTravel_ModalTittleDelete" />
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <FormattedMessage id="detailTravel_ModalBodyDelete" />
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseModalDelete}>
+                    <FormattedMessage id="detailTravel_ModalButtonCancel" />
+                  </Button>
+                  <Button variant="primary" onClick={() => alert('eliminado')}>
                     <FormattedMessage id="detailTravel_ModalButtonAcept" />
                   </Button>
                 </Modal.Footer>

@@ -137,7 +137,7 @@ export const MapV2 = ({ destinations, locale, ...rest }) => {
               data: geojson,
             },
             paint: {
-              'line-color': '#2faaff',
+              'line-color': '#134074',
               'line-width': 6,
             },
           });

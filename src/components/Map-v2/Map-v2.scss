@@ -47,8 +47,8 @@
   }
   .waypoint-marker {
     align-items: center;
-    background-color: #4a90e2;
-    border: solid 3px #2faaff;
+    background-color: #0b2545;
+    border: solid 3px #13315c;
     border-radius: 50%;
     color: #ffffff;
     display: flex;
@@ -60,10 +60,16 @@
     width: 32px !important;
     will-change: unset !important;
   }
+  .mapboxgl-user-location-dot {
+    background-color: #134074;
+  }
+  .mapboxgl-user-location-dot::before {
+    background-color: #0b2545;
+  }
   .tt-icon-number {
     align-items: center;
     background: #ffffff;
-    background-color: #8dc3eb;
+    background-color: #0b2545;
     border-radius: 50%;
     color: #ffffff;
     display: flex;

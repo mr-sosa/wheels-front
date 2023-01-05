@@ -23,8 +23,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   .btn {
-    background: #ffc868;
-    border-color: #ffc868;
+    background: #e1ff68;
+    border-color: #e1ff68;
     color: #000000;
   }
   .btn:hover {
@@ -39,6 +39,11 @@ body {
     background-color: #0b2646;
     border-color: #0b2646;
     box-shadow: 0 0 0 0.25rem #8da9c4;
+  }
+  .btn:disabled {
+    color: #0b2646;
+    background-color: #ffc868;
+    border-color: #ffc868;
   }
   .badge {
     background-color: #134074 !important;
